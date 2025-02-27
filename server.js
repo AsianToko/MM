@@ -18,6 +18,30 @@ client.connect()
   .then(() => {
     console.log("Connected to MongoDB");
 
+    // Route om de registratiegegevens te verwerken
+    app.post("/register", async (req, res) => {
+      const { username, password } = req.body;
+
+      try {
+        const database = client.db("login");
+        const usersCollection = database.collection("login");
+
+        // Controleer of de gebruiker al bestaat
+        const existingUser = await usersCollection.findOne({ username });
+
+        if (existingUser) {
+          res.send(`<h2>Gebruikersnaam is al in gebruik</h2><a href="/register">Opnieuw proberen</a>`);
+        } else {
+          // Voeg de nieuwe gebruiker toe
+          await usersCollection.insertOne({ username, password });
+          res.send(`<h2>Account succesvol aangemaakt</h2><a href="/">Inloggen</a>`);
+        }
+      } catch (err) {
+        console.error("Error creating user", err);
+        res.status(500).send("Internal Server Error");
+      }
+    });
+
     // Route om de inloggegevens te verwerken
     app.post("/login", async (req, res) => {
       const { username, password } = req.body;
