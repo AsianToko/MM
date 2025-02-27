@@ -30,7 +30,7 @@ client.connect()
         const existingUser = await usersCollection.findOne({ username });
 
         if (existingUser) {
-          res.send(`<h2>Gebruikersnaam is al in gebruik</h2><a href="/register">Opnieuw proberen</a>`);
+          res.send(`<h2>Gebruikersnaam is al in gebruik</h2><a href="/register.html">Opnieuw proberen</a>`);
         } else {
           // Voeg de nieuwe gebruiker toe
           await usersCollection.insertOne({ username, password });
