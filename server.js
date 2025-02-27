@@ -102,3 +102,11 @@ client
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "home.html"));
 });
+
+
+app.use((req, res) => {
+  // log error to console
+  console.error('404 error at URL: ' + req.url)
+  // send back a HTTP response with status code 404
+  res.status(404).send('404 error at URL: ' + req.url)
+})
