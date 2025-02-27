@@ -13,10 +13,12 @@ app.use(express.static(path.join(__dirname, "static")));
 // Middleware om form-data te verwerken
 app.use(express.urlencoded({ extended: true }));
 
-const uri = "mongodb+srv://admin:admin@mmdb.barfq.mongodb.net/?retryWrites=true&w=majority&appName=MMdb";
+const uri =
+  "mongodb+srv://admin:admin@mmdb.barfq.mongodb.net/?retryWrites=true&w=majority&appName=MMdb";
 const client = new MongoClient(uri);
 
-client.connect()
+client
+  .connect()
   .then(() => {
     console.log("Connected to MongoDB");
 
@@ -37,11 +39,15 @@ client.connect()
         const existingUser = await usersCollection.findOne({ username });
 
         if (existingUser) {
-          res.send(`<h2>Gebruikersnaam is al in gebruik</h2><a href="/register">Opnieuw proberen</a>`);
+          res.send(
+            `<h2>Gebruikersnaam is al in gebruik</h2><a href="/register">Opnieuw proberen</a>`
+          );
         } else {
           // Voeg de nieuwe gebruiker toe
           await usersCollection.insertOne({ username, password });
-          res.send(`<h2>Account succesvol aangemaakt</h2><a href="/">Inloggen</a>`);
+          res.send(
+            `<h2>Account succesvol aangemaakt</h2><a href="/">Inloggen</a>`
+          );
         }
       } catch (err) {
         console.error("Error creating user", err);
@@ -87,7 +93,7 @@ client.connect()
       console.log(`Server draait op http://localhost:${PORT}`);
     });
   })
-  .catch(err => {
+  .catch((err) => {
     console.error("Failed to connect to MongoDB", err);
     process.exit(1);
   });
