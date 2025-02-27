@@ -18,6 +18,11 @@ client.connect()
   .then(() => {
     console.log("Connected to MongoDB");
 
+    // Route om het registratieformulier te tonen
+    app.get("/register", (req, res) => {
+      res.sendFile(path.join(__dirname, "register.html"));
+    });
+
     // Route om de registratiegegevens te verwerken
     app.post("/register", async (req, res) => {
       const { username, password } = req.body;
@@ -30,7 +35,7 @@ client.connect()
         const existingUser = await usersCollection.findOne({ username });
 
         if (existingUser) {
-          res.send(`<h2>Gebruikersnaam is al in gebruik</h2><a href="/register.html">Opnieuw proberen</a>`);
+          res.send(`<h2>Gebruikersnaam is al in gebruik</h2><a href="/register">Opnieuw proberen</a>`);
         } else {
           // Voeg de nieuwe gebruiker toe
           await usersCollection.insertOne({ username, password });
