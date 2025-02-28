@@ -17,7 +17,7 @@ body{
 
 .login{
   width: 20em;
-  height: 11em;
+  height: 12em;
   margin: auto;
   padding: 1em;
   border: 0.3em , solid, rgb(175, 47, 175);
@@ -33,4 +33,5 @@ body{
   width: 100%;
   height: 2em;
   color: white;
+  margin-top: 1em;
 }
