@@ -98,13 +98,12 @@ client
     process.exit(1);
   });
 
-// Route om homepage te tonen
-app.get("/", function (req, res) {
-  res.render("pages/home");
-});
-
-
 // about page
 app.get("/detail", function (req, res) {
   res.render("pages/detail");
+});
+
+// Route om homepage te tonen
+app.get("/", function (req, res) {
+  res.render("pages/home");
 });
