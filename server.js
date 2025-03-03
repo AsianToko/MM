@@ -99,8 +99,8 @@ client
   });
 
 // Route om het inlogformulier te tonen
-app.get("/home", function (req, res) => {
-  res,render("pages/home");
+app.get("/", function (req, res) {
+  res.render("pages/home");
 });
 
 
