@@ -69,3 +69,33 @@ nav a:hover {
   color: #ffcc00;
 }
 
+/* Search bar styling */
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
+.search-bar input {
+  border: none;
+  outline: none;
+  padding: 5px;
+  font-size: 16px;
+  width: 150px;
+}
+
+.search-bar button {
+  background: #ffcc00;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 3px;
+  transition: background 0.3s;
+}
+
+.search-bar button:hover {
+  background: #e6b800;
+}
