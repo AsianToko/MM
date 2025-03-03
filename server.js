@@ -98,9 +98,12 @@ client
     process.exit(1);
   });
 
-// Route om het inlogformulier te tonen
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "home.html"));
+// about page
+app.get("/detail", function (req, res) {
+  res.render("pages/detail");
 });
 
-
+// Route om homepage te tonen
+app.get("/", function (req, res) {
+  res.render("pages/home");
+});
