@@ -7,11 +7,6 @@
   box-sizing: border-box;
 }
 
-<<<<<<< HEAD
-main {
-  
-}
-=======
 body{
   display: flex;
   justify-content: center;
@@ -40,4 +35,3 @@ body{
   color: white;
   margin-top: 1em;
 }
->>>>>>> 63765ee430b66dc2147bb47bbbe2766018bc6e05
