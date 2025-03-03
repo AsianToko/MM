@@ -23,8 +23,8 @@ client
     console.log("Connected to MongoDB");
 
     // Route om het registratieformulier te tonen
-    app.get("/register", (req, res) => {
-      res.sendFile(path.join(__dirname, "register.html"));
+    app.get("/register", function (req, res) {
+      res.render("pages/register");
     });
 
     // Route om de registratiegegevens te verwerken
@@ -53,6 +53,10 @@ client
         console.error("Error creating user", err);
         res.status(500).send("Internal Server Error");
       }
+    });
+
+    app.get("/login", function (req, res) {
+      res.render("pages/login");
     });
 
     // Route om de inloggegevens te verwerken
