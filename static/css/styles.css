@@ -41,15 +41,28 @@ header {
   background-color: rgba(64, 13, 13, 1);
   padding: 15px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
   color: white;
 }
 
-/* Title styling */
+/* Left-side title */
 .title {
   font-size: 24px;
   font-weight: bold;
+}
+
+/* Center container (forces search bar into the middle) */
+.search-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+/* Right-side container (navigation links) */
+.nav-container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
 /* Navigation links */
@@ -83,7 +96,7 @@ nav a:hover {
   outline: none;
   padding: 5px;
   font-size: 16px;
-  width: 150px;
+  width: 40vw;
 }
 
 .search-bar button {
@@ -98,4 +111,36 @@ nav a:hover {
 
 .search-bar button:hover {
   background: #e6b800;
+}
+
+/****** DETAIL PAGINA ******/
+
+.movie-data {
+  padding-left: 1em;
+  padding-top: 2em;
+}
+
+.movie-poster {
+  max-width: 30%;
+  padding-top: 2em;
+  padding-left: 2em;
+  padding-bottom: 2em;
+}
+
+.movie-background-container {
+  background: rgb(39, 39, 39);
+}
+
+.movie-container {
+  display: flex;
+}
+
+.movie-info {
+  color: white;
+}
+
+.description {
+  padding-left: 1em;
+  padding-top: 1em;
+  padding-right: 1em;
 }
