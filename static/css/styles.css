@@ -35,8 +35,37 @@
   margin-top: 1em;
 }
 
-/***** DETAIL PAGINA *****/
+/***** HEADER *****/
 
-.title {
-  padding: 10em;
+header {
+  background-color: rgba(64, 13, 13, 1);
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
 }
+
+/* Title styling */
+.title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Navigation links */
+nav {
+  display: flex;
+  gap: 15px;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: #ffcc00;
+}
+
