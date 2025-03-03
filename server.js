@@ -1,113 +1,133 @@
 const express = require("express");
 const path = require("path");
-const fs = require("fs");
 const { MongoClient } = require("mongodb");
+require('dotenv').config(); // Add this line
 
 const app = express();
 const PORT = 3000;
 
+// Instellen van de view engine
 app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
 
+// Statische bestanden (CSS, JS, etc.)
 app.use(express.static(path.join(__dirname, "static")));
 
 // Middleware om form-data te verwerken
 app.use(express.urlencoded({ extended: true }));
 
+// MongoDB connectie-instellingen
 const uri =
   "mongodb+srv://admin:admin@mmdb.barfq.mongodb.net/?retryWrites=true&w=majority&appName=MMdb";
 const client = new MongoClient(uri);
 
-client
-  .connect()
-  .then(() => {
-    console.log("Connected to MongoDB");
+// TMDB API instellingen
+const options = {
+  method: "GET",
+  headers: {
+    accept: "application/json",
+    Authorization: `Bearer ${process.env.TMDB_BEARER_TOKEN}`, // Update this line
+  },
+};
 
-    // Route om het registratieformulier te tonen
-    app.get("/register", function (req, res) {
-      res.render("pages/register");
-    });
+// ✅ Homepagina met films van TMDB
+app.get("/", async (req, res) => {
+  try {
+    const response = await fetch(
+      "https://api.themoviedb.org/3/trending/movie/day?language=en-US",
+      options
+    );
+    const data = await response.json();
 
-    // Route om de registratiegegevens te verwerken
-    app.post("/register", async (req, res) => {
-      const { username, password } = req.body;
+    console.log("Movies opgehaald:", data.results.length);
+    res.render("pages/home", { movies: data.results });
+  } catch (error) {
+    console.error("Fout bij het ophalen van films:", error);
+    res.status(500).send("Er is een fout opgetreden bij het laden van de films.");
+  }
+});
 
-      try {
-        const database = client.db("login");
-        const usersCollection = database.collection("login");
+// ✅ Registratiepagina weergeven
+app.get("/register", (req, res) => {
+  res.render("pages/register");
+});
 
-        // Controleer of de gebruiker al bestaat
-        const existingUser = await usersCollection.findOne({ username });
+// ✅ Gebruiker registreren
+app.post("/register", async (req, res) => {
+  const { username, password } = req.body;
 
-        if (existingUser) {
-          res.send(
-            `<h2>Gebruikersnaam is al in gebruik</h2><a href="/register">Opnieuw proberen</a>`
-          );
-        } else {
-          // Voeg de nieuwe gebruiker toe
-          await usersCollection.insertOne({ username, password });
-          res.send(
-            `<h2>Account succesvol aangemaakt</h2><a href="/">Inloggen</a>`
-          );
-        }
-      } catch (err) {
-        console.error("Error creating user", err);
-        res.status(500).send("Internal Server Error");
-      }
-    });
+  try {
+    const database = client.db("login");
+    const usersCollection = database.collection("users");
 
-    app.get("/login", function (req, res) {
-      res.render("pages/login");
-    });
+    // Controleer of de gebruiker al bestaat
+    const existingUser = await usersCollection.findOne({ username });
 
-    // Route om de inloggegevens te verwerken
-    app.post("/login", async (req, res) => {
-      const { username, password } = req.body;
+    if (existingUser) {
+      res.send(`<h2>Gebruikersnaam is al in gebruik</h2><a href="/register">Opnieuw proberen</a>`);
+    } else {
+      await usersCollection.insertOne({ username, password });
+      res.send(`<h2>Account succesvol aangemaakt</h2><a href="/">Inloggen</a>`);
+    }
+  } catch (err) {
+    console.error("Error bij registreren:", err);
+    res.status(500).send("Interne serverfout.");
+  }
+});
 
-      try {
-        const database = client.db("login");
-        const usersCollection = database.collection("login");
+// ✅ Loginpagina weergeven
+app.get("/login", (req, res) => {
+  res.render("pages/login");
+});
 
-        // Controleer of de gebruiker bestaat
-        const user = await usersCollection.findOne({ username, password });
+// ✅ Inloggen
+app.post("/login", async (req, res) => {
+  const { username, password } = req.body;
 
-        if (user) {
-          res.send(`<h2>Welkom, ${username}!</h2>`);
-        } else {
-          res.send(
-            `<h2>Ongeldige gebruikersnaam of wachtwoord</h2><a href="/">Opnieuw proberen</a>`
-          );
-        }
-      } catch (err) {
-        console.error("Error fetching user data", err);
-        res.status(500).send("Internal Server Error");
-      }
-    });
+  try {
+    const database = client.db("login");
+    const usersCollection = database.collection("users");
 
-    // Route to check MongoDB connection status
-    app.get("/check-mongodb-connection", (req, res) => {
-      if (client.topology && client.topology.isConnected()) {
-        res.send("MongoDB is connected");
-      } else {
-        res.send("MongoDB is not connected");
-      }
-    });
+    const user = await usersCollection.findOne({ username, password });
 
-    // Start de server
-    app.listen(PORT, () => {
-      console.log(`Server draait op http://localhost:${PORT}`);
-    });
-  })
-  .catch((err) => {
-    console.error("Failed to connect to MongoDB", err);
-    process.exit(1);
-  });
+    if (user) {
+      res.send(`<h2>Welkom, ${username}!</h2>`);
+    } else {
+      res.send(`<h2>Ongeldige gebruikersnaam of wachtwoord</h2><a href="/">Opnieuw proberen</a>`);
+    }
+  } catch (err) {
+    console.error("Error bij inloggen:", err);
+    res.status(500).send("Interne serverfout.");
+  }
+});
 
-// about page
-app.get("/detail", function (req, res) {
+// ✅ Detailpagina
+app.get("/detail", (req, res) => {
   res.render("pages/detail");
 });
 
-// Route om homepage te tonen
-app.get("/", function (req, res) {
-  res.render("pages/home");
+// ✅ MongoDB connectie check
+app.get("/check-mongodb-connection", (req, res) => {
+  if (client.topology && client.topology.isConnected()) {
+    res.send("MongoDB is verbonden");
+  } else {
+    res.send("MongoDB is niet verbonden");
+  }
 });
+
+// ✅ Server starten na MongoDB connectie
+const startServer = async () => {
+  try {
+    await client.connect();
+    console.log("✅ Verbonden met MongoDB!");
+
+    app.listen(PORT, () => {
+      console.log(`🚀 Server draait op http://localhost:${PORT}`);
+    });
+  } catch (err) {
+    console.error("❌ MongoDB verbinding mislukt:", err);
+    process.exit(1);
+  }
+};
+
+startServer();
