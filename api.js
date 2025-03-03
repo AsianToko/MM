@@ -8,7 +8,7 @@ const options = {
 
 async function fetchData() {
   try {
-    const response = await fetch('https://api.themoviedb.org/3/authentication', options);
+    const response = await fetch('https://api.themoviedb.org/3/trending/movie/day?language=en-US', options);
     const data = await response.json();
     console.log(data);
     return data;
