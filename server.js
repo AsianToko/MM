@@ -1,6 +1,8 @@
 const express = require("express");
 const path = require("path");
 const { MongoClient } = require("mongodb");
+require('dotenv').config();
+const xss = require("xss"); // Add this line
 
 const app = express();
 const PORT = 3000;
@@ -25,8 +27,7 @@ const options = {
   method: "GET",
   headers: {
     accept: "application/json",
-    Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5NTIyMDU2NmFkZjhkZTE3MzkzYmRjZmIyYTEzZjExNSIsIm5iZiI6MTc0MDY4NDY3Mi4wNjYsInN1YiI6IjY3YzBiZDgwYmM2OTM1YTAwMWEyNWU3NSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.hv_If1vHVfOooP9pySjD1zYPAe2MTK6I23DrlfFKuV4",
+    Authorization: `Bearer ${process.env.TMDB_BEARER_TOKEN}`, // Update this line
   },
 };
 
@@ -54,7 +55,8 @@ app.get("/register", (req, res) => {
 
 // ✅ Gebruiker registreren
 app.post("/register", async (req, res) => {
-  const { username, password } = req.body;
+  const username = xss(req.body.username); // Sanitize input
+  const password = xss(req.body.password); // Sanitize input
 
   try {
     const database = client.db("login");
@@ -82,7 +84,8 @@ app.get("/login", (req, res) => {
 
 // ✅ Inloggen
 app.post("/login", async (req, res) => {
-  const { username, password } = req.body;
+  const username = xss(req.body.username); // Sanitize input
+  const password = xss(req.body.password); // Sanitize input
 
   try {
     const database = client.db("login");
@@ -129,5 +132,6 @@ const startServer = async () => {
     process.exit(1);
   }
 };
+
 
 startServer();
