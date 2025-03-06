@@ -87,7 +87,7 @@ app.post("/login", async (req, res) => {
 
   try {
     const database = client.db("login");
-    const usersCollection = database.collection("users");
+    const usersCollection = database.collection("login");
 
     const user = await usersCollection.findOne({ username, password });
 
