@@ -5,6 +5,7 @@ require('dotenv').config(); // Add this line
 
 const app = express();
 const PORT = 3000;
+const xss = require("xss");
 
 // Instellen van de view engine
 app.set("view engine", "ejs");
@@ -129,5 +130,6 @@ const startServer = async () => {
     process.exit(1);
   }
 };
+
 
 startServer();
