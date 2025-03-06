@@ -117,25 +117,30 @@ nav a:hover {
 
 .movie-data {
   padding-left: 1em;
-  padding-top: 2em;
+
 }
 
 .movie-poster {
-  max-width: 30%;
-  padding-top: 2em;
-  padding-left: 2em;
-  padding-bottom: 2em;
+  max-height: 45vh;
+  width: auto;
 }
 
 .movie-background-container {
   background: rgb(39, 39, 39);
+  min-height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .movie-container {
   display: flex;
+  gap: 2em;
+  max-width: 75%;
 }
 
 .movie-info {
+  max-width: 60em;
   color: white;
 }
 
@@ -143,4 +148,40 @@ nav a:hover {
   padding-left: 1em;
   padding-top: 1em;
   padding-right: 1em;
+}
+
+.actors-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centreert de hele sectie */
+  text-align: center;
+  margin-top: 2em;
+}
+
+.actors-title {
+ /* Zorgt ervoor dat de titel bovenaan staat */
+  margin-bottom: 1em;
+}
+
+.actors {
+  display: flex;
+ /* Centreert de actor-cards */
+  overflow-x: auto;
+  gap: 1em; /* Ruimte tussen de kaarten */
+  max-width: 75%; /* Houdt het gelijk met de breedte van movie-info */
+}
+
+.actor-card {
+  flex: 0 0 auto;
+  width: 13em;
+  text-align: center;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  background: #fff;
+}
+
+.actor-card img {
+  width: 100%;
+  border-radius: 8px;
 }

@@ -1,37 +1,71 @@
 <!DOCTYPE html>
 <html lang="nl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/styles.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/styles.css" />
     <title>Titel Film</title>
-</head>
-<body>
-    <header>
-        <%- include('../partials/header'); %>
-    </header>
+  </head>
+  <body>
+    <header><%- include('../partials/header'); %></header>
     <main>
-        <div class="movie-background-container">
-            <div class="movie-container">
-                <img class="movie-poster" src="/images/placeholderposter.jpeg" alt="Poster van de film">
-                <div class="movie-info">
-                    <div class="movie-data">
-                        <h1 class="filmNaam">Titel van film/acteur</h1>
-                        <p>Datum/genres/tijsduur</p>
-                    </div>
-                    <div class="description">
-                        <h2>Omschrijving</h2>
-                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. In adipisci consequuntur, harum labore corporis vitae dicta similique rerum velit blanditiis facilis ipsa nulla quae magni at aperiam sequi non distinctio!</p>
-                    </div>                    
-                </div>
+      <div class="movie-background-container">
+        <div class="movie-container">
+          <img
+            class="movie-poster"
+            src="/images/placeholderposter.jpeg"
+            alt="Poster van de film"
+          />
+          <div class="movie-info">
+            <div class="movie-data">
+              <h1 class="filmNaam">Titel van film/acteur</h1>
+              <p>Datum/genres/tijsduur</p>
             </div>
+            <div class="description">
+              <h2>Omschrijving</h2>
+              <p>
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. In
+                adipisci consequuntur, harum labore corporis vitae dicta
+                similique rerum velit blanditiis facilis ipsa nulla quae magni
+                at aperiam sequi non distinctio!
+              </p>
+            </div>
+          </div>
         </div>
-        
-
+      </div>
+      <div class="actors-container">
+        <h2 class="actors-title">Actors</h2>
+        <div class="actors">
+          <div class="actor-card">
+            <img src="/images/placeholderactor.jpg" alt="Foto van de acteur" />
+            <h3 class="actor-name">Voor- en achternaam</h3>
+            <p class="personage">Naam personage</p>
+          </div>
+          <div class="actor-card">
+            <img src="/images/placeholderactor.jpg" alt="Foto van de acteur" />
+            <h3 class="actor-name">Voor- en achternaam</h3>
+            <p class="personage">Naam personage</p>
+          </div>
+          <div class="actor-card">
+            <img src="/images/placeholderactor.jpg" alt="Foto van de acteur" />
+            <h3 class="actor-name">Voor- en achternaam</h3>
+            <p class="personage">Naam personage</p>
+          </div>
+          <div class="actor-card">
+            <img src="/images/placeholderactor.jpg" alt="Foto van de acteur" />
+            <h3 class="actor-name">Voor- en achternaam</h3>
+            <p class="personage">Naam personage</p>
+          </div>
+          <div class="actor-card">
+            <img src="/images/placeholderactor.jpg" alt="Foto van de acteur" />
+            <h3 class="actor-name">Voor- en achternaam</h3>
+            <p class="personage">Naam personage</p>
+          </div>
+        </div>
+      </div>
     </main>
     <footer>
-        <!-- Hier komt een ejs met de footer! -->
+      <!-- Hier komt een ejs met de footer! -->
     </footer>
-    
-</body>
+  </body>
 </html>
