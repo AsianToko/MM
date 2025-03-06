@@ -2,36 +2,30 @@ const express = require("express");
 const path = require("path");
 const { MongoClient } = require("mongodb");
 require('dotenv').config();
-const xss = require("xss"); // Add this line
+const xss = require("xss");
+const validator = require("validator");
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
 const app = express();
 const PORT = 3000;
 
-// Instellen van de view engine
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-// Statische bestanden (CSS, JS, etc.)
 app.use(express.static(path.join(__dirname, "static")));
-
-// Middleware om form-data te verwerken
 app.use(express.urlencoded({ extended: true }));
 
-// MongoDB connectie-instellingen
-const uri =
-  "mongodb+srv://admin:admin@mmdb.barfq.mongodb.net/?retryWrites=true&w=majority&appName=MMdb";
+const uri = process.env.MONGO_URI;
 const client = new MongoClient(uri);
 
-// TMDB API instellingen
 const options = {
   method: "GET",
   headers: {
     accept: "application/json",
-    Authorization: `Bearer ${process.env.TMDB_BEARER_TOKEN}`, // Update this line
+    Authorization: `Bearer ${process.env.TMDB_BEARER_TOKEN}`,
   },
 };
 
-// ✅ Homepagina met films van TMDB
 app.get("/", async (req, res) => {
   try {
     const response = await fetch(
@@ -48,21 +42,22 @@ app.get("/", async (req, res) => {
   }
 });
 
-// ✅ Registratiepagina weergeven
 app.get("/register", (req, res) => {
   res.render("pages/register");
 });
 
-// ✅ Gebruiker registreren
 app.post("/register", async (req, res) => {
-  const username = xss(req.body.username); // Sanitize input
-  const password = xss(req.body.password); // Sanitize input
+  const username = xss(req.body.username);
+  const password = xss(req.body.password);
+
+  if (!validator.isAlphanumeric(username) || !validator.isLength(password, { min: 6 })) {
+    return res.send(`<h2>Ongeldige gebruikersnaam of wachtwoord</h2><a href="/register">Opnieuw proberen</a>`);
+  }
 
   try {
     const database = client.db("login");
     const usersCollection = database.collection("users");
 
-    // Controleer of de gebruiker al bestaat
     const existingUser = await usersCollection.findOne({ username });
 
     if (existingUser) {
@@ -77,15 +72,17 @@ app.post("/register", async (req, res) => {
   }
 });
 
-// ✅ Loginpagina weergeven
 app.get("/login", (req, res) => {
   res.render("pages/login");
 });
 
-// ✅ Inloggen
 app.post("/login", async (req, res) => {
-  const username = xss(req.body.username); // Sanitize input
-  const password = xss(req.body.password); // Sanitize input
+  const username = xss(req.body.username);
+  const password = xss(req.body.password);
+
+  if (!validator.isAlphanumeric(username) || !validator.isLength(password, { min: 6 })) {
+    return res.send(`<h2>Ongeldige gebruikersnaam of wachtwoord</h2><a href="/login">Opnieuw proberen</a>`);
+  }
 
   try {
     const database = client.db("login");
@@ -104,12 +101,10 @@ app.post("/login", async (req, res) => {
   }
 });
 
-// ✅ Detailpagina
 app.get("/detail", (req, res) => {
   res.render("pages/detail");
 });
 
-// ✅ MongoDB connectie check
 app.get("/check-mongodb-connection", (req, res) => {
   if (client.topology && client.topology.isConnected()) {
     res.send("MongoDB is verbonden");
@@ -118,7 +113,6 @@ app.get("/check-mongodb-connection", (req, res) => {
   }
 });
 
-// ✅ Server starten na MongoDB connectie
 const startServer = async () => {
   try {
     await client.connect();
@@ -132,6 +126,5 @@ const startServer = async () => {
     process.exit(1);
   }
 };
-
 
 startServer();
