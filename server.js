@@ -5,6 +5,8 @@ const { MongoClient } = require("mongodb");
 require("dotenv").config();
 const bcrypt = require("bcrypt");
 const xss = require("xss");
+const session = require("express-session");
+const fetch = require("node-fetch"); // Voeg deze regel toe om fetch te importeren
 const saltRounds = 10;
 
 const app = express();
@@ -20,6 +22,14 @@ app.use(express.static(path.join(__dirname, "static")));
 // Middleware om form-data te verwerken
 app.use(express.urlencoded({ extended: true }));
 
+// Sessies configureren
+app.use(session({
+  secret: process.env.JWT_SECRET, // Gebruik de waarde van JWT_SECRET als de secret
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false } // Set to true if using HTTPS
+}));
+
 // MongoDB connectie-instellingen
 const uri =
   "mongodb+srv://admin:admin@mmdb.barfq.mongodb.net/?retryWrites=true&w=majority&appName=MMdb";
@@ -33,6 +43,11 @@ const options = {
     Authorization: `Bearer ${process.env.TMDB_BEARER_TOKEN}`,
   },
 };
+
+// ✅ Sessiegegevens controleren
+app.get("/session", (req, res) => {
+  res.send(req.session);
+});
 
 // ✅ Homepagina met films van TMDB
 app.get("/", async (req, res) => {
@@ -98,6 +113,7 @@ app.post("/login", async (req, res) => {
     const user = await usersCollection.findOne({ username });
 
     if (user && await bcrypt.compare(password, user.password)) {
+      req.session.user = { username }; // Sla de gebruiker op in de sessie
       res.send(`<h2>Welkom, ${username}!</h2>`);
     } else {
       res.send(`<h2>Ongeldige gebruikersnaam of wachtwoord</h2><a href="/">Opnieuw proberen</a>`);
