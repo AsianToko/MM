@@ -133,7 +133,6 @@ const startServer = async () => {
     });
   } catch (err) {
     console.error("❌ MongoDB verbinding mislukt:", err);
-    // eslint-disable-next-line no-undef
     process.exit(1);
   }
 };

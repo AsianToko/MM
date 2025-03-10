@@ -1,3 +1,5 @@
+// Description: This file contains the code to fetch the trending movies from the API.
+// The code is refactored to a separate file called api.js.
 const options = {
   method: 'GET',
   headers: {
@@ -6,7 +8,7 @@ const options = {
   }
 };
 
-async function fetchData() {
+async function trending() {
   try {
     const response = await fetch('https://api.themoviedb.org/3/trending/movie/day?language=en-US', options);
     const data = await response.json();
