@@ -1,6 +1,11 @@
 const express = require("express");
 const path = require("path");
 const { MongoClient } = require("mongodb");
+require("dotenv").config();
+const bcrypt = require("bcrypt");
+const xss = require("xss");
+const { trending, nowplaying } = require("./api");
+const saltRounds = 10;
 
 const app = express();
 const PORT = 3000;
@@ -33,14 +38,11 @@ const options = {
 // ✅ Homepagina met films van TMDB
 app.get("/", async (req, res) => {
   try {
-    const response = await fetch(
-      "https://api.themoviedb.org/3/trending/movie/day?language=en-US",
-      options
-    );
-    const data = await response.json();
+    const trendingMovies = await trending();
+    const nowPlayingMovies = await nowplaying();
 
-    console.log("Movies opgehaald:", data.results.length);
-    res.render("pages/home", { movies: data.results });
+    console.log("Movies opgehaald:", trendingMovies.results.length);
+    res.render("pages/home", { trendingMovies: trendingMovies.results, nowPlayingMovies: nowPlayingMovies.results });
   } catch (error) {
     console.error("Fout bij het ophalen van films:", error);
     res.status(500).send("Er is een fout opgetreden bij het laden van de films.");

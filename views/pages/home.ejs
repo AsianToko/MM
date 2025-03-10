@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Popular Movies</title>
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/styles.css" />
   </head>
   <body class="container">
     <header><%- include('../partials/header'); %></header>
@@ -13,17 +13,38 @@
       <h1>Trending Movies</h1>
 
       <div id="movies">
-        <% if (movies && movies.length > 0) { %>
-          <% movies.forEach(movie => { %>
-            <div class="movie">
-              <img src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>" alt="<%= movie.title %>" />
-              <h2><%= movie.title %></h2>
-              <p>⭐ Rating: <%= movie.vote_average %>/10</p>
-              <p><%= movie.overview %></p>
-            </div>
-          <% }) %>
-        <% } else { %>
-          <p>No movies found.</p>
+        <% if (trendingMovies && trendingMovies.length > 0) { %> <%
+        trendingMovies.forEach(movie => { %>
+        <div class="movie">
+          <img
+            src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>"
+            alt="<%= movie.title %>"
+          />
+          <h2><%= movie.title %></h2>
+          <p>⭐ Rating: <%= movie.vote_average %>/10</p>
+          <p><%= movie.overview %></p>
+        </div>
+        <% }) %> <% } else { %>
+        <p>No movies found.</p>
+        <% } %>
+      </div>
+
+      <h1>Now Playing Movies</h1>
+
+      <div id="movies">
+        <% if (nowPlayingMovies && nowPlayingMovies.length > 0) { %> <%
+        nowPlayingMovies.forEach(movie => { %>
+        <div class="movie">
+          <img
+            src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>"
+            alt="<%= movie.title %>"
+          />
+          <h2><%= movie.title %></h2>
+          <p>⭐ Rating: <%= movie.vote_average %>/10</p>
+          <p><%= movie.overview %></p>
+        </div>
+        <% }) %> <% } else { %>
+        <p>No movies found.</p>
         <% } %>
       </div>
     </main>
