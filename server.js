@@ -1,11 +1,13 @@
 const express = require("express");
 const path = require("path");
 const { MongoClient } = require("mongodb");
-require('dotenv').config(); // Add this line
+require("dotenv").config();
+const bcrypt = require("bcrypt");
+const xss = require("xss");
+const saltRounds = 10;
 
 const app = express();
 const PORT = 3000;
-const xss = require("xss");
 
 // Instellen van de view engine
 app.set("view engine", "ejs");
@@ -27,7 +29,7 @@ const options = {
   method: "GET",
   headers: {
     accept: "application/json",
-    Authorization: `Bearer ${process.env.TMDB_BEARER_TOKEN}`, // Update this line
+    Authorization: `Bearer ${process.env.TMDB_BEARER_TOKEN}`,
   },
 };
 
@@ -55,11 +57,13 @@ app.get("/register", (req, res) => {
 
 // ✅ Gebruiker registreren
 app.post("/register", async (req, res) => {
-  const { username, password } = req.body;
+  const username = xss(req.body.username);
+  const password = xss(req.body.password);
 
   try {
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
     const database = client.db("login");
-    const usersCollection = database.collection("users");
+    const usersCollection = database.collection("login");
 
     // Controleer of de gebruiker al bestaat
     const existingUser = await usersCollection.findOne({ username });
@@ -67,7 +71,7 @@ app.post("/register", async (req, res) => {
     if (existingUser) {
       res.send(`<h2>Gebruikersnaam is al in gebruik</h2><a href="/register">Opnieuw proberen</a>`);
     } else {
-      await usersCollection.insertOne({ username, password });
+      await usersCollection.insertOne({ username, password: hashedPassword });
       res.send(`<h2>Account succesvol aangemaakt</h2><a href="/">Inloggen</a>`);
     }
   } catch (err) {
@@ -83,15 +87,16 @@ app.get("/login", (req, res) => {
 
 // ✅ Inloggen
 app.post("/login", async (req, res) => {
-  const { username, password } = req.body;
+  const username = xss(req.body.username);
+  const password = xss(req.body.password);
 
   try {
     const database = client.db("login");
     const usersCollection = database.collection("login");
 
-    const user = await usersCollection.findOne({ username, password });
+    const user = await usersCollection.findOne({ username });
 
-    if (user) {
+    if (user && await bcrypt.compare(password, user.password)) {
       res.send(`<h2>Welkom, ${username}!</h2>`);
     } else {
       res.send(`<h2>Ongeldige gebruikersnaam of wachtwoord</h2><a href="/">Opnieuw proberen</a>`);
@@ -130,6 +135,5 @@ const startServer = async () => {
     process.exit(1);
   }
 };
-
 
 startServer();
