@@ -85,7 +85,7 @@
     "vary": "^1.1.2",
     "webidl-conversions": "^7.0.0",
     "whatwg-url": "^14.1.1",
-    "xss": "^1.0.15"
+    "xss": "^1.0.10"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
