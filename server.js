@@ -58,7 +58,7 @@ app.post("/register", async (req, res) => {
 
   try {
     const database = client.db("login");
-    const usersCollection = database.collection("users");
+    const usersCollection = database.collection("login");
 
     // Controleer of de gebruiker al bestaat
     const existingUser = await usersCollection.findOne({ username });
@@ -86,7 +86,7 @@ app.post("/login", async (req, res) => {
 
   try {
     const database = client.db("login");
-    const usersCollection = database.collection("users");
+    const usersCollection = database.collection("login");
 
     const user = await usersCollection.findOne({ username, password });
 

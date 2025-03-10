@@ -1,3 +1,5 @@
+import { get } from "http";
+
 const options = {
   method: 'GET',
   headers: {
@@ -8,7 +10,7 @@ const options = {
 
 async function fetchData() {
   try {
-    const response = await fetch('https://api.themoviedb.org/3/authentication', options);
+    const response =get('https://api.themoviedb.org/3/authentication', options);
     const data = await response.json();
     console.log(data);
     return data;
