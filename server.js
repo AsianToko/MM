@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const express = require("express");
 const path = require("path");
 const { MongoClient } = require("mongodb");
@@ -132,6 +133,7 @@ const startServer = async () => {
     });
   } catch (err) {
     console.error("❌ MongoDB verbinding mislukt:", err);
+    // eslint-disable-next-line no-undef
     process.exit(1);
   }
 };
