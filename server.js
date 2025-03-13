@@ -5,6 +5,7 @@ require("dotenv").config();
 const bcrypt = require("bcrypt");
 const xss = require("xss");
 const { trending, nowplaying } = require("./api");
+const { error } = require("console");
 const saltRounds = 10;
 
 const app = express();
@@ -143,5 +144,5 @@ const startServer = async () => {
     process.exit(1);
   }
 };
-
+error
 startServer();
