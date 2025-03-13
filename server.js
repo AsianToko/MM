@@ -104,8 +104,16 @@ app.post("/login", async (req, res) => {
 });
 
 // ✅ Detailpagina
-app.get("/detail", (req, res) => {
-  res.render("pages/detail");
+app.get("/detail", async (req, res) => {
+  const movieId = req.query.id;
+  try {
+    const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=95220566adf8de17393bdcfb2a13f115`);
+    const movie = await response.json();
+    res.render('pages/detail', { movie });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
 });
 
 // ✅ MongoDB connectie check

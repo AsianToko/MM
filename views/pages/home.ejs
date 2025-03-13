@@ -16,13 +16,15 @@
         <% if (trendingMovies && trendingMovies.length > 0) { %> <%
         trendingMovies.forEach(movie => { %>
         <div class="movie">
-          <img
-            src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>"
-            alt="<%= movie.title %>"
-          />
-          <h2><%= movie.title %></h2>
-          <p>⭐ Rating: <%= movie.vote_average %>/10</p>
-          <p><%= movie.overview %></p>
+          <a href="/detail?id=<%= movie.id %>">
+            <img
+              src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>"
+              alt="<%= movie.title %>"
+            />
+            <h2><%= movie.title %></h2>
+            <p>⭐ Rating: <%= movie.vote_average %>/10</p>
+            <p><%= movie.overview %></p>
+          </a>
         </div>
         <% }) %> <% } else { %>
         <p>No movies found.</p>
@@ -35,13 +37,15 @@
         <% if (nowPlayingMovies && nowPlayingMovies.length > 0) { %> <%
         nowPlayingMovies.forEach(movie => { %>
         <div class="movie">
-          <img
-            src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>"
-            alt="<%= movie.title %>"
-          />
-          <h2><%= movie.title %></h2>
-          <p>⭐ Rating: <%= movie.vote_average %>/10</p>
-          <p><%= movie.overview %></p>
+          <a href="/detail?id=<%= movie.id %>">
+            <img
+              src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>"
+              alt="<%= movie.title %>"
+            />
+            <h2><%= movie.title %></h2>
+            <p>⭐ Rating: <%= movie.vote_average %>/10</p>
+            <p><%= movie.overview %></p>
+          </a>
         </div>
         <% }) %> <% } else { %>
         <p>No movies found.</p>
