@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const express = require("express");
 const path = require("path");
 const { MongoClient } = require("mongodb");
@@ -5,7 +6,6 @@ require("dotenv").config();
 const bcrypt = require("bcrypt");
 const xss = require("xss");
 const { trending, nowplaying } = require("./api");
-const { error } = require("console");
 const saltRounds = 10;
 
 const app = express();
@@ -22,8 +22,7 @@ app.use(express.static(path.join(__dirname, "static")));
 app.use(express.urlencoded({ extended: true }));
 
 // MongoDB connectie-instellingen
-const uri =
-  "mongodb+srv://admin:admin@mmdb.barfq.mongodb.net/?retryWrites=true&w=majority&appName=MMdb";
+const uri = "mongodb+srv://admin:admin@mmdb.barfq.mongodb.net/?retryWrites=true&w=majority&appName=MMdb";
 const client = new MongoClient(uri);
 
 // TMDB API instellingen
@@ -31,8 +30,7 @@ const options = {
   method: "GET",
   headers: {
     accept: "application/json",
-    Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5NTIyMDU2NmFkZjhkZTE3MzkzYmRjZmIyYTEzZjExNSIsIm5iZiI6MTc0MDY4NDY3Mi4wNjYsInN1YiI6IjY3YzBiZDgwYmM2OTM1YTAwMWEyNWU3NSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.hv_If1vHVfOooP9pySjD1zYPAe2MTK6I23DrlfFKuV4",
+    Authorization: `Bearer ${process.env.TMDB_BEARER_TOKEN}`,
   },
 };
 
@@ -42,7 +40,9 @@ app.get("/", async (req, res) => {
     const trendingMovies = await trending();
     const nowPlayingMovies = await nowplaying();
 
-    console.log("Movies opgehaald:", trendingMovies.results.length);
+    console.log("Trending movies:", trendingMovies.results.length);
+    console.log("Now playing movies:", nowPlayingMovies.results.length);
+
     res.render("pages/home", { trendingMovies: trendingMovies.results, nowPlayingMovies: nowPlayingMovies.results });
   } catch (error) {
     console.error("Fout bij het ophalen van films:", error);
@@ -57,19 +57,20 @@ app.get("/register", (req, res) => {
 
 // ✅ Gebruiker registreren
 app.post("/register", async (req, res) => {
-  const { username, password } = req.body;
+  const username = xss(req.body.username);
+  const password = xss(req.body.password);
 
   try {
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
     const database = client.db("login");
     const usersCollection = database.collection("login");
 
-    // Controleer of de gebruiker al bestaat
     const existingUser = await usersCollection.findOne({ username });
 
     if (existingUser) {
       res.send(`<h2>Gebruikersnaam is al in gebruik</h2><a href="/register">Opnieuw proberen</a>`);
     } else {
-      await usersCollection.insertOne({ username, password });
+      await usersCollection.insertOne({ username, password: hashedPassword });
       res.send(`<h2>Account succesvol aangemaakt</h2><a href="/">Inloggen</a>`);
     }
   } catch (err) {
@@ -85,15 +86,16 @@ app.get("/login", (req, res) => {
 
 // ✅ Inloggen
 app.post("/login", async (req, res) => {
-  const { username, password } = req.body;
+  const username = xss(req.body.username);
+  const password = xss(req.body.password);
 
   try {
     const database = client.db("login");
     const usersCollection = database.collection("login");
 
-    const user = await usersCollection.findOne({ username, password });
+    const user = await usersCollection.findOne({ username });
 
-    if (user) {
+    if (user && (await bcrypt.compare(password, user.password))) {
       res.send(`<h2>Welkom, ${username}!</h2>`);
     } else {
       res.send(`<h2>Ongeldige gebruikersnaam of wachtwoord</h2><a href="/">Opnieuw proberen</a>`);
@@ -108,16 +110,16 @@ app.post("/login", async (req, res) => {
 app.get("/detail", async (req, res) => {
   const movieId = req.query.id;
   try {
-    const movieResponse = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=95220566adf8de17393bdcfb2a13f115`);
+    const movieResponse = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?language=en-US`, options);
     const movie = await movieResponse.json();
 
-    const creditsResponse = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=95220566adf8de17393bdcfb2a13f115`);
+    const creditsResponse = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/credits?language=en-US`, options);
     const credits = await creditsResponse.json();
 
-    res.render('pages/detail', { movie, cast: credits.cast });
+    res.render("pages/detail", { movie, cast: credits.cast });
   } catch (error) {
-    console.error(error);
-    res.status(500).send('Internal Server Error');
+    console.error("Error fetching movie details:", error);
+    res.status(500).send("Internal Server Error");
   }
 });
 
@@ -144,5 +146,5 @@ const startServer = async () => {
     process.exit(1);
   }
 };
-error
+
 startServer();
