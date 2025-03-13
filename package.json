@@ -76,6 +76,7 @@
     "side-channel-weakmap": "^1.0.2",
     "sparse-bitfield": "^3.0.3",
     "statuses": "^2.0.1",
+    "swiper": "^11.2.5",
     "toidentifier": "^1.0.1",
     "tr46": "^5.0.0",
     "type-is": "^1.6.18",

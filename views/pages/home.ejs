@@ -4,15 +4,40 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/css/styles.css">
-  <title>Homepagina</title>  <head>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+/>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script> src="home.js" </script>
+<title>Homepagina</title>  <head>
 
 </head>
 <body class="container">
   <header><%- include('../partials/header'); %></header>
 
   <main>
-   
-    
+    <div class="swiper">
+
+      <div class="swiper-wrapper">
+        <div class="swiper-slide"><img src="/images/Movie_poster" alt=""></div>
+        <div class="swiper-slide"><img src="/images/Movie_poster" alt=""></div>
+        <div class="swiper-slide"><img src="/images/Movie_poster" alt=""></div>
+      </div> <!-- swiper wrapper end -->
+
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+    </div> <!-- swiper end -->
+    <!-- <div class="image_slider">
+      <li>
+        <a href="detail.ejs"><img class="poster poster5" src="/images/Movie_poster.png" alt="movie poster"></a>
+        <a href="detail.ejs"><img class="poster poster6" src="/images/Movie_poster.png" alt="movie poster"></a>
+        <a href="detail.ejs"><img class="poster poster7" src="/images/Movie_poster.png" alt="movie poster"></a>
+        <a href="detail.ejs"><img class="poster poster8" src="/images/Movie_poster.png" alt="movie poster"></a>
+        <a href="detail.ejs"><img class="poster poster9" src="/images/Movie_poster.png" alt="movie poster"></a>
+      </li>
+    </div> -->
   </main>
 
   <footer><%- include('../partials/footer'); %></footer>
