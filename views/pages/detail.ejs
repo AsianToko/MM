@@ -13,13 +13,14 @@
         <div class="movie-container">
           <img
             class="movie-poster"
-            src="/images/placeholderposter.jpeg"
-            alt="Poster van de film"
+            <img
+            src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>"
+            alt="<%= movie.title %>"
           />
           <div class="movie-info">
             <div class="movie-data">
-              <h1 class="filmNaam">Titel van film/acteur</h1>
-              <p>Datum/genres/tijsduur</p>
+              <h1><%= movie.titel %></h1>
+              <p><%= release_date %></p>
             </div>
             <div class="description">
               <h2>Omschrijving</h2>
