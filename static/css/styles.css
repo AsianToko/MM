@@ -122,14 +122,6 @@ body {
   padding: 0;
 }
 
-h1 {
-  text-align: center;
-}
-
-.container {
-  padding: 20px;
-}
-
 /* Grid voor films op de homepagina */
 #movies {
   display: grid;
@@ -151,34 +143,46 @@ h1 {
 
 /****** DETAIL PAGINA ******/
 
-.movie-data {
-  padding-left: 1em;
-  padding-top: 2em;
-}
-
 .movie-poster {
   max-width: 30%;
   padding-top: 2em;
   padding-left: 2em;
   padding-bottom: 2em;
+  padding-right: 2em;
 }
 
 .movie-background-container {
-  background: rgb(39, 39, 39);
+  background-color: darkslategray;
 }
 
 .movie-container {
   display: flex;
-  flex-wrap: wrap;
   gap: 2em;
+  align-items: flex-start;
+  max-width: 85%;
+  margin: auto;
 }
 
-.movie-info {
-  color: white;
+.movie-details {
+  display: flex;
+  flex-direction: column; /* Zet titel boven de info */
+}
+
+.movie-title {
+  font-size: 5em;
+}
+
+.movie-info p {
+  font-size: 1.5em;
+  line-height: 1.4em;
 }
 
 .description {
   padding-left: 1em;
   padding-top: 1em;
   padding-right: 1em;
+}
+
+ul {
+  list-style: none;
 }
