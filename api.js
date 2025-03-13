@@ -6,9 +6,9 @@ const options = {
   }
 };
 
-async function fetchData() {
+async function fetchData(url) {
   try {
-    const response = await fetch('https://api.themoviedb.org/3/trending/movie/day?language=en-US', options);
+    const response = await fetch(url, options);
     const data = await response.json();
     console.log(data);
     return data;
@@ -17,3 +17,19 @@ async function fetchData() {
     throw error;
   }
 }
+
+// Do not change this function
+async function fetchData() {
+  try {
+    const response = await fetch('https://api.themoviedb.org/3/movie/278?language=en-US', options);
+    const data = await response.json();
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
+module.exports = { fetchData };
+
