@@ -107,9 +107,13 @@ app.post("/login", async (req, res) => {
 app.get("/detail", async (req, res) => {
   const movieId = req.query.id;
   try {
-    const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=95220566adf8de17393bdcfb2a13f115`);
-    const movie = await response.json();
-    res.render('pages/detail', { movie });
+    const movieResponse = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=95220566adf8de17393bdcfb2a13f115`);
+    const movie = await movieResponse.json();
+
+    const creditsResponse = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=95220566adf8de17393bdcfb2a13f115`);
+    const credits = await creditsResponse.json();
+
+    res.render('pages/detail', { movie, cast: credits.cast });
   } catch (error) {
     console.error(error);
     res.status(500).send('Internal Server Error');
