@@ -1,7 +1,15 @@
 const express = require("express");
 const path = require("path");
 const { MongoClient } = require("mongodb");
+<<<<<<< HEAD
 require('dotenv').config(); 
+=======
+require("dotenv").config();
+const bcrypt = require("bcrypt");
+const xss = require("xss");
+const { trending, nowplaying } = require("./api");
+const saltRounds = 10;
+>>>>>>> ccbc0e036134df7d4ac3dbf52659b31ed91b5c0e
 
 const app = express();
 const PORT = 3000;
@@ -26,13 +34,19 @@ const options = {
   method: "GET",
   headers: {
     accept: "application/json",
+<<<<<<< HEAD
     Authorization: `Bearer ${process.env.TMDB_BEARER_TOKEN}`, // Update this line
+=======
+    Authorization:
+      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5NTIyMDU2NmFkZjhkZTE3MzkzYmRjZmIyYTEzZjExNSIsIm5iZiI6MTc0MDY4NDY3Mi4wNjYsInN1YiI6IjY3YzBiZDgwYmM2OTM1YTAwMWEyNWU3NSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.hv_If1vHVfOooP9pySjD1zYPAe2MTK6I23DrlfFKuV4",
+>>>>>>> ccbc0e036134df7d4ac3dbf52659b31ed91b5c0e
   },
 };
 
 // ✅ Homepagina met films van TMDB
 app.get("/", async (req, res) => {
   try {
+<<<<<<< HEAD
     const response = await fetch(
       "https://api.themoviedb.org/3/trending/movie/day?language=en-US",
       options
@@ -41,6 +55,13 @@ app.get("/", async (req, res) => {
 
     console.log("Movies opgehaald:", data.results.length);
     res.render("pages/home", { movies: data.results });
+=======
+    const trendingMovies = await trending();
+    const nowPlayingMovies = await nowplaying();
+
+    console.log("Movies opgehaald:", trendingMovies.results.length);
+    res.render("pages/home", { trendingMovies: trendingMovies.results, nowPlayingMovies: nowPlayingMovies.results });
+>>>>>>> ccbc0e036134df7d4ac3dbf52659b31ed91b5c0e
   } catch (error) {
     console.error("Fout bij het ophalen van films:", error);
     res.status(500).send("Er is een fout opgetreden bij het laden van de films.");
@@ -58,7 +79,11 @@ app.post("/register", async (req, res) => {
 
   try {
     const database = client.db("login");
+<<<<<<< HEAD
     const usersCollection = database.collection("users");
+=======
+    const usersCollection = database.collection("login");
+>>>>>>> ccbc0e036134df7d4ac3dbf52659b31ed91b5c0e
 
     // Controleer of de gebruiker al bestaat
     const existingUser = await usersCollection.findOne({ username });
@@ -86,6 +111,7 @@ app.post("/login", async (req, res) => {
 
   try {
     const database = client.db("login");
+<<<<<<< HEAD
     const usersCollection = database.collection("users");
 
     const user = await usersCollection.findOne({ username, password });
@@ -130,4 +156,62 @@ const startServer = async () => {
   }
 };
 
+=======
+    const usersCollection = database.collection("login");
+
+    const user = await usersCollection.findOne({ username, password });
+
+    if (user) {
+      res.send(`<h2>Welkom, ${username}!</h2>`);
+    } else {
+      res.send(`<h2>Ongeldige gebruikersnaam of wachtwoord</h2><a href="/">Opnieuw proberen</a>`);
+    }
+  } catch (err) {
+    console.error("Error bij inloggen:", err);
+    res.status(500).send("Interne serverfout.");
+  }
+});
+
+// ✅ Detailpagina
+app.get("/detail", async (req, res) => {
+  const movieId = req.query.id;
+  try {
+    const movieResponse = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=95220566adf8de17393bdcfb2a13f115`);
+    const movie = await movieResponse.json();
+
+    const creditsResponse = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=95220566adf8de17393bdcfb2a13f115`);
+    const credits = await creditsResponse.json();
+
+    res.render('pages/detail', { movie, cast: credits.cast });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+// ✅ MongoDB connectie check
+app.get("/check-mongodb-connection", (req, res) => {
+  if (client.topology && client.topology.isConnected()) {
+    res.send("MongoDB is verbonden");
+  } else {
+    res.send("MongoDB is niet verbonden");
+  }
+});
+
+// ✅ Server starten na MongoDB connectie
+const startServer = async () => {
+  try {
+    await client.connect();
+    console.log("✅ Verbonden met MongoDB!");
+
+    app.listen(PORT, () => {
+      console.log(`🚀 Server draait op http://localhost:${PORT}`);
+    });
+  } catch (err) {
+    console.error("❌ MongoDB verbinding mislukt:", err);
+    process.exit(1);
+  }
+};
+
+>>>>>>> ccbc0e036134df7d4ac3dbf52659b31ed91b5c0e
 startServer();
