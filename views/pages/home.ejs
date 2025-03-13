@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<<<<<<< HEAD
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -43,3 +44,59 @@
   <footer><%- include('../partials/footer'); %></footer>
 </body>
 </html>
+=======
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Popular Movies</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body class="container">
+    <header><%- include('../partials/header'); %></header>
+
+    <main>
+      <h1>Trending Movies</h1>
+
+      <div id="movies">
+        <% if (trendingMovies && trendingMovies.length > 0) { %> <%
+        trendingMovies.forEach(movie => { %>
+        <div class="movie">
+          <a href="/detail?id=<%= movie.id %>">
+            <img
+              src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>"
+              alt="<%= movie.title %>"
+            />
+            <h2><%= movie.title %></h2>
+            <p>⭐ Rating: <%= movie.vote_average %>/10</p>
+          </a>
+        </div>
+        <% }) %> <% } else { %>
+        <p>No movies found.</p>
+        <% } %>
+      </div>
+
+      <h1>Now Playing Movies</h1>
+
+      <div id="movies">
+        <% if (nowPlayingMovies && nowPlayingMovies.length > 0) { %> <%
+        nowPlayingMovies.forEach(movie => { %>
+        <div class="movie">
+          <a href="/detail?id=<%= movie.id %>">
+            <img
+              src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>"
+              alt="<%= movie.title %>"
+            />
+            <h2><%= movie.title %></h2>
+            <p>⭐ Rating: <%= movie.vote_average %>/10</p>
+          </a>
+        </div>
+        <% }) %> <% } else { %>
+        <p>No movies found.</p>
+        <% } %>
+      </div>
+    </main>
+
+    <footer><%- include('../partials/footer'); %></footer>
+  </body>
+</html>
+>>>>>>> f92dc278e283e5dfb82df93111fc10e186f72996
