@@ -49,6 +49,25 @@ app.get("/session", (req, res) => {
   res.send(req.session);
 });
 
+// ✅ Gastensessie maken
+app.get("/create-guest-session", async (req, res) => {
+  try {
+    const response = await fetch("https://api.themoviedb.org/3/authentication/guest_session/new", {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization: `Bearer ${process.env.TMDB_BEARER_TOKEN}`,
+      },
+    });
+    const data = await response.json();
+    req.session.guestSessionId = data.guest_session_id;
+    res.send(`Gastensessie aangemaakt: ${data.guest_session_id}`);
+  } catch (error) {
+    console.error("Fout bij het maken van een gastensessie:", error);
+    res.status(500).send("Er is een fout opgetreden bij het maken van een gastensessie.");
+  }
+});
+
 // ✅ Homepagina met films van TMDB
 app.get("/", async (req, res) => {
   try {
