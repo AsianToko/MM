@@ -30,24 +30,25 @@
             </div>
         </div>
 
-
+      <!-- Cast Sectie -->
       <h2>Cast</h2>
       <% if (cast && cast.length > 0) { %>
-      <ul>
-        <% cast.forEach(actor => { %>
-        <li>
-          <% if (actor.profile_path) { %>
-          <img
-            src="https://image.tmdb.org/t/p/w200<%= actor.profile_path %>"
-            alt="<%= actor.name %>"
-            onerror="this.onerror=null;this.src='/images/base.jpg';"
-          />
-          <% } else { %>
-          <img src="/images/base.jpg" alt="<%= actor.name %>" />
-          <% } %> <%= actor.name %> as <%= actor.character %>
-        </li>
+      <div class="cast-container">
+        <% cast.forEach(actor => { %> <!-- Alle castleden tonen -->
+          <div class="cast-member">
+            <% if (actor.profile_path) { %>
+            <img
+              src="https://image.tmdb.org/t/p/w200<%= actor.profile_path %>"
+              alt="<%= actor.name %>"
+              onerror="this.onerror=null;this.src='/images/base.jpg';"
+            />
+            <% } else { %>
+            <img src="/images/base.jpg" alt="<%= actor.name %>" />
+            <% } %>
+            <p><%= actor.name %></p>
+          </div>
         <% }) %>
-      </ul>
+      </div>
       <% } else { %>
       <p>No cast information available.</p>
       <% } %>

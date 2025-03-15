@@ -141,7 +141,12 @@ body {
   border-radius: 8px;
 }
 
+/***************************/
+/***************************/
 /****** DETAIL PAGINA ******/
+/***************************/
+/***************************/
+
 
 .movie-poster {
   max-width: 30%;
@@ -158,7 +163,6 @@ body {
 .movie-container {
   display: flex;
   gap: 2em;
-  align-items: flex-start;
   max-width: 85%;
   margin: auto;
 }
@@ -185,4 +189,34 @@ body {
 
 ul {
   list-style: none;
+}
+
+/***** CAST *****/
+
+
+
+.cast-container {
+  display: flex;
+  overflow-x: auto; 
+  gap: 2em; /* Ruimte tussen de castleden */
+  padding-bottom: 2em; /* Optioneel, om te zorgen dat de scrollbalk niet tegen de rand komt */
+  margin-top: 2em; /* Optioneel, ruimte boven de cast sectie */
+  max-width: 60%; /* Zorgt ervoor dat de cast-container niet breder wordt dan 60% van de schermbreedte */
+  margin-left: auto; /* Centraal uitlijnen */
+  margin-right: auto; /* Centraal uitlijnen */
+}
+
+.cast-member {
+  flex-shrink: 0; /* Zorgt ervoor dat de castleden niet kleiner worden dan hun inhoud */
+  width: 13em; /* Pas de breedte aan op basis van hoe groot je de castleden wilt weergeven */
+  text-align: center;
+}
+
+.cast-member img {
+  width: 100%; /* Zorgt ervoor dat de afbeelding de hele breedte van de container vult */
+  border-radius: 1em; 
+}
+
+.cast-member p {
+  margin-top: 5px; /* Ruimte tussen de afbeelding en naam */
 }
