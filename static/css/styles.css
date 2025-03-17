@@ -122,14 +122,6 @@ body {
   padding: 0;
 }
 
-h1 {
-  text-align: center;
-}
-
-.container {
-  padding: 20px;
-}
-
 /* Grid voor films op de homepagina */
 #movies {
   display: grid;
@@ -149,36 +141,82 @@ h1 {
   border-radius: 8px;
 }
 
+/***************************/
+/***************************/
 /****** DETAIL PAGINA ******/
+/***************************/
+/***************************/
 
-.movie-data {
-  padding-left: 1em;
-  padding-top: 2em;
-}
 
 .movie-poster {
   max-width: 30%;
   padding-top: 2em;
   padding-left: 2em;
   padding-bottom: 2em;
+  padding-right: 2em;
 }
 
 .movie-background-container {
-  background: rgb(39, 39, 39);
+  background-color: darkslategray;
 }
 
 .movie-container {
   display: flex;
-  flex-wrap: wrap;
   gap: 2em;
+  max-width: 85%;
+  margin: auto;
 }
 
-.movie-info {
-  color: white;
+.movie-details {
+  display: flex;
+  flex-direction: column; /* Zet titel boven de info */
+}
+
+.movie-title {
+  font-size: 5em;
+}
+
+.movie-info p {
+  font-size: 1.5em;
+  line-height: 1.4em;
 }
 
 .description {
   padding-left: 1em;
   padding-top: 1em;
   padding-right: 1em;
+}
+
+ul {
+  list-style: none;
+}
+
+/***** CAST *****/
+
+
+
+.cast-container {
+  display: flex;
+  overflow-x: auto; 
+  gap: 2em; /* Ruimte tussen de castleden */
+  padding-bottom: 2em; /* Optioneel, om te zorgen dat de scrollbalk niet tegen de rand komt */
+  margin-top: 2em; /* Optioneel, ruimte boven de cast sectie */
+  max-width: 60%; /* Zorgt ervoor dat de cast-container niet breder wordt dan 60% van de schermbreedte */
+  margin-left: auto; /* Centraal uitlijnen */
+  margin-right: auto; /* Centraal uitlijnen */
+}
+
+.cast-member {
+  flex-shrink: 0; /* Zorgt ervoor dat de castleden niet kleiner worden dan hun inhoud */
+  width: 13em; /* Pas de breedte aan op basis van hoe groot je de castleden wilt weergeven */
+  text-align: center;
+}
+
+.cast-member img {
+  width: 100%; /* Zorgt ervoor dat de afbeelding de hele breedte van de container vult */
+  border-radius: 1em; 
+}
+
+.cast-member p {
+  margin-top: 5px; /* Ruimte tussen de afbeelding en naam */
 }

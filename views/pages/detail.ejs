@@ -34,14 +34,14 @@
             />
             <% } else { %>
             <img src="/images/base.jpg" alt="<%= actor.name %>" />
-            <% } %> <%= actor.name %> as <%= actor.character %>
-          </li>
-          <% }) %>
-        </ul>
-        <% } else { %>
-        <p>No cast information available.</p>
-        <% } %>
+            <% } %>
+            <p><%= actor.name %></p>
+          </div>
+        <% }) %>
       </div>
+      <% } else { %>
+      <p>No cast information available.</p>
+      <% } %>
     </main>
 
     <footer><%- include('../partials/footer'); %></footer>
