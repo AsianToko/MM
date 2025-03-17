@@ -34,7 +34,7 @@ const options = {
   },
 };
 
-// ✅ Homepagina met films van TMDB
+//  Homepagina met films van TMDB
 app.get("/", async (req, res) => {
   try {
     const trendingMovies = await trending();
@@ -50,12 +50,12 @@ app.get("/", async (req, res) => {
   }
 });
 
-// ✅ Registratiepagina weergeven
+//  Registratiepagina weergeven
 app.get("/register", (req, res) => {
   res.render("pages/register");
 });
 
-// ✅ Gebruiker registreren
+//  Gebruiker registreren
 app.post("/register", async (req, res) => {
   const username = xss(req.body.username);
   const password = xss(req.body.password);
@@ -79,12 +79,12 @@ app.post("/register", async (req, res) => {
   }
 });
 
-// ✅ Loginpagina weergeven
+//  Loginpagina weergeven
 app.get("/login", (req, res) => {
   res.render("pages/login");
 });
 
-// ✅ Inloggen
+//  Inloggen
 app.post("/login", async (req, res) => {
   const username = xss(req.body.username);
   const password = xss(req.body.password);
@@ -106,7 +106,7 @@ app.post("/login", async (req, res) => {
   }
 });
 
-// ✅ Detailpagina
+// Detailpagina
 app.get("/detail", async (req, res) => {
   const movieId = req.query.id;
   try {
@@ -123,7 +123,7 @@ app.get("/detail", async (req, res) => {
   }
 });
 
-// ✅ MongoDB connectie check
+//  MongoDB connectie check
 app.get("/check-mongodb-connection", (req, res) => {
   if (client.topology && client.topology.isConnected()) {
     res.send("MongoDB is verbonden");
@@ -132,17 +132,17 @@ app.get("/check-mongodb-connection", (req, res) => {
   }
 });
 
-// ✅ Server starten na MongoDB connectie
+//  Server starten na MongoDB connectie
 const startServer = async () => {
   try {
     await client.connect();
     console.log("✅ Verbonden met MongoDB!");
 
     app.listen(PORT, () => {
-      console.log(`🚀 Server draait op http://localhost:${PORT}`);
+      console.log(` Server draait op http://localhost:${PORT}`);
     });
   } catch (err) {
-    console.error("❌ MongoDB verbinding mislukt:", err);
+    console.error(" MongoDB verbinding mislukt:", err);
     process.exit(1);
   }
 };
