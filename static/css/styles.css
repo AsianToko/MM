@@ -7,7 +7,7 @@
   box-sizing: border-box;
 }
 
-/* body{
+/* body {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -192,8 +192,6 @@ ul {
 }
 
 /***** CAST *****/
-
-
 
 .cast-container {
   display: flex;
