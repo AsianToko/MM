@@ -101,6 +101,68 @@ nav a:hover {
   background: #e6b800;
 }
 
-.poster {
-  height: 20em;
+/* .swiper {
+  position: relative;
+  width: 90%;
+  height: 30em;
+} */
+
+/* .swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #e6b800;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  scale: 0.9;
+} */
+
+/* .swiper-slide {
+  margin-top: 3em;
+  height: 30em;
+  background: #e6b800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 200ms linear;
+  transform: scale(0.8);
+
+  &.swiper-slide-active {
+    transform: scale(1);
+  }
+}
+
+.swiper-slide img {
+  display: block;
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+} */
+
+.swiper-container {
+  position: relative;
+  width: 90%;
+  height: 100%;
+  background-color: beige;
+}
+
+.swiper-slide {
+  height: 25em;
+  display: flex;
+  background: #eee;
+  align-items: center;
+  justify-content: center;
+  transition: all 200ms linear;
+  transform: scale(0.8) !important;
+}
+
+.swiper-slide-active {
+  transform: scale(1) !important;
+  background: #e6b800;
+}
+
+.swiper-slide__content {
+  height: 25em;
 }

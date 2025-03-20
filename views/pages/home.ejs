@@ -4,13 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/css/styles.css">
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
-/>
 
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<script> src="home.js" </script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+
 <title>Homepagina</title>  <head>
 
 </head>
@@ -18,28 +14,32 @@
   <header><%- include('../partials/header'); %></header>
 
   <main>
+      <!-- Slider main container -->
     <div class="swiper">
-
+      <!-- Additional required wrapper -->
       <div class="swiper-wrapper">
-        <div class="swiper-slide"><img src="/images/Movie_poster" alt=""></div>
-        <div class="swiper-slide"><img src="/images/Movie_poster" alt=""></div>
-        <div class="swiper-slide"><img src="/images/Movie_poster" alt=""></div>
-      </div> <!-- swiper wrapper end -->
-
+        <!-- Slides -->
+        <div class="swiper-slide">slide 1</div>
+        <div class="swiper-slide">slide 2</div>
+        <div class="swiper-slide">slide 3</div>
+        <div class="swiper-slide">slide 4</div>
+        <div class="swiper-slide">slide 5</div>
+        <div class="swiper-slide">Slide 6</div>
+        <div class="swiper-slide">Slide 7</div>
+        <div class="swiper-slide">Slide 8</div>
+        <div class="swiper-slide">Slide 9</div>
+        <div class="swiper-slide">Slide 10</div>
+      </div>
+      <div class="swiper-pagination"></div>
       <div class="swiper-button-prev"></div>
       <div class="swiper-button-next"></div>
-    </div> <!-- swiper end -->
-    <!-- <div class="image_slider">
-      <li>
-        <a href="detail.ejs"><img class="poster poster5" src="/images/Movie_poster.png" alt="movie poster"></a>
-        <a href="detail.ejs"><img class="poster poster6" src="/images/Movie_poster.png" alt="movie poster"></a>
-        <a href="detail.ejs"><img class="poster poster7" src="/images/Movie_poster.png" alt="movie poster"></a>
-        <a href="detail.ejs"><img class="poster poster8" src="/images/Movie_poster.png" alt="movie poster"></a>
-        <a href="detail.ejs"><img class="poster poster9" src="/images/Movie_poster.png" alt="movie poster"></a>
-      </li>
-    </div> -->
+    </div>
   </main>
 
   <footer><%- include('../partials/footer'); %></footer>
 </body>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script src="/scripts/home.js"> </script>
 </html>
