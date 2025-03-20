@@ -157,7 +157,7 @@ body {
 }
 
 .movie-background-container {
-  background-color: darkslategray;
+  background-color: rgb(31, 33, 33);
 }
 
 .movie-container {
@@ -174,6 +174,8 @@ body {
 
 .movie-title {
   font-size: 5em;
+  margin-top: .3em;
+  margin-bottom: 2em;
 }
 
 .movie-info p {
@@ -199,7 +201,7 @@ ul {
   gap: 2em; /* Ruimte tussen de castleden */
   padding-bottom: 2em; /* Optioneel, om te zorgen dat de scrollbalk niet tegen de rand komt */
   margin-top: 2em; /* Optioneel, ruimte boven de cast sectie */
-  max-width: 60%; /* Zorgt ervoor dat de cast-container niet breder wordt dan 60% van de schermbreedte */
+  max-width: 80%; /* Zorgt ervoor dat de cast-container niet breder wordt dan 60% van de schermbreedte */
   margin-left: auto; /* Centraal uitlijnen */
   margin-right: auto; /* Centraal uitlijnen */
 }
@@ -217,4 +219,9 @@ ul {
 
 .cast-member p {
   margin-top: 5px; /* Ruimte tussen de afbeelding en naam */
+}
+
+h2 {
+  margin-left: 10%;
+  margin-top: 2em;
 }
