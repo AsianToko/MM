@@ -11,42 +11,49 @@
 
     <main>
       <div class="movie-background-container">
-          <div class="movie-container">
-              <img
-                class="movie-poster"
-                src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>"
-                alt="<%= movie.title %>"
-              />
-              <div class="movie-details">
-                  <h1 class="movie-title"><%= movie.title %></h1>
-                  <div class="movie-info">
-                    <p><strong>Rating:</strong> <%= movie.vote_average %>/10</p>
-                    <p><strong>Description</strong><%= movie.overview %></p>
-                    <p><strong>Release Date:</strong> <%= movie.release_date %></p>
-                    <p><strong>Runtime:</strong> <%= movie.runtime %> minutes</p>
-                    <p><strong>Genres:</strong> <%= movie.genres.map(genre => genre.name).join(', ') %></p>
-                  </div>
-              </div>
+        <div class="movie-container">
+          <img
+            class="movie-poster"
+            src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>"
+            alt="<%= movie.title %>"
+          />
+          <div class="movie-details">
+            <h1 class="movie-title"><%= movie.title %></h1>
+            <div class="movie-info">
+              <p><strong>Rating:</strong> <%= movie.vote_average %>/10</p>
+              <p><strong>Description</strong> <%= movie.overview %></p>
+              <p><strong>Release Date:</strong> <%= movie.release_date %></p>
+              <p><strong>Runtime:</strong> <%= movie.runtime %> minutes</p>
+              <p>
+                <strong>Genres:</strong> <%= movie.genres.map(genre =>
+                genre.name).join(', ') %>
+              </p>
+            </div>
           </div>
+        </div>
       </div>
 
-    <!-- Cast Sectie -->
-    <h2>Cast</h2>
-    <% if (cast && cast.length > 0) { %>
-    <div class="cast-container">
-      <% cast.forEach(actor => { %> <!-- Alle castleden tonen -->
+      <!-- Cast Sectie -->
+      <h2 class="cast-title">Cast</h2>
+      <% if (cast && cast.length > 0) { %>
+      <div class="cast-container">
+        <% cast.forEach(actor => { %>
+        <!-- Alle castleden tonen -->
         <div class="cast-member">
           <% if (actor.profile_path) { %>
           <img
             src="https://image.tmdb.org/t/p/w200<%= actor.profile_path %>"
             alt="<%= actor.name %>"
           />
-          <% } %> <!-- Closing the IF statement -->
+          <% } %>
+          <!-- Closing the IF statement -->
           <p><%= actor.name %></p>
         </div>
-      <% }) %> <!-- Closing the forEach loop -->
-    </div>
-    <% } %> <!-- Closing the IF statement -->
+        <% }) %>
+        <!-- Closing the forEach loop -->
+      </div>
+      <% } %>
+      <!-- Closing the IF statement -->
     </main>
 
     <footer><%- include('../partials/footer'); %></footer>
