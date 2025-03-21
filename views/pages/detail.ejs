@@ -20,12 +20,13 @@
           <div class="movie-details">
             <h1 class="movie-title"><%= movie.title %></h1>
             <div class="movie-info">
-              <p>Rating: <%= movie.vote_average %>/10</p>
-              <p><%= movie.overview %></p>
-              <p>Release Date: <%= movie.release_date %></p>
-              <p>Runtime: <%= movie.runtime %> minutes</p>
+              <p><strong>Rating:</strong> <%= movie.vote_average %>/10</p>
+              <p><strong>Description</strong> <%= movie.overview %></p>
+              <p><strong>Release Date:</strong> <%= movie.release_date %></p>
+              <p><strong>Runtime:</strong> <%= movie.runtime %> minutes</p>
               <p>
-                Genres: <%= movie.genres.map(genre => genre.name).join(', ') %>
+                <strong>Genres:</strong> <%= movie.genres.map(genre =>
+                genre.name).join(', ') %>
               </p>
             </div>
           </div>
@@ -33,8 +34,12 @@
       </div>
 
       <!-- Cast Sectie -->
+      <<<<<<< HEAD
       <h2>Cast</h2>
-      <% if (cast && cast.length > 0) { %>
+      =======
+      <h2 class="cast-title">Cast</h2>
+      >>>>>>> caa06d67b46a06a484f6a461c5f56af3dca44d01 <% if (cast &&
+      cast.length > 0) { %>
       <div class="cast-container">
         <% cast.forEach(actor => { %>
         <!-- Alle castleden tonen -->

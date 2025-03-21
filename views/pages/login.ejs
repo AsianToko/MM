@@ -3,14 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/css/styles.css" />
-    <title>MM</title>
+    <title>Login</title>
+    <link rel="stylesheet" href="/css/styles.css" />   
   </head>
   <body>
     <div class="login">
-      <h2>Inloggen</h2>
+      <h2 class="sign-in">Inloggen</h2>
       <form action="/login" method="POST">
-        <label for="username">&#128113;</label>
+        <label for="username">Username:</label>
         <input
           type="text"
           placeholder="username"
@@ -19,7 +19,7 @@
           required
         />
         <br />
-        <label for="password">&#128273;</label>
+        <label for="password">Password:</label>
         <input
           type="password"
           placeholder="password"
@@ -30,8 +30,7 @@
         <br />
         <button class="login_button" type="submit">Inloggen</button>
       </form>
-      <br />
-      <a href="/register">Create an Account</a>
+      <a class="switch-page" href="/register">Create an Account</a>
     </div>
   </body>
 </html>
