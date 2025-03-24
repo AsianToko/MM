@@ -5,52 +5,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Popular Movies</title>
     <link rel="stylesheet" href="/css/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
   </head>
   <body class="container">
     <header><%- include('../partials/header'); %></header>
 
     <main>
-      <h1>Trending Movies</h1>
-
-      <div id="movies">
-        <% if (trendingMovies && trendingMovies.length > 0) { %> <%
-        trendingMovies.forEach(movie => { %>
-        <div class="movie">
-          <a href="/detail?id=<%= movie.id %>">
-            <img
-              src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>"
-              alt="<%= movie.title %>"
-            />
-            <h2><%= movie.title %></h2>
-            <p>Rating: <%= movie.vote_average %>/10</p>
-          </a>
+      <h2 class="playing">Trending Movies</h2>
+      <!-- Slider main container -->
+      <div class="swiper">
+        <!-- Additional required wrapper -->
+        <div class="swiper-wrapper">
+          <!-- Slides -->
+          <% if (trendingMovies && trendingMovies.length > 0) { %> <%
+          trendingMovies.forEach(movie => { %>
+          <div class="movie swiper-slide">
+            <a href="/detail?id=<%= movie.id %>">
+              <img
+                src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>"
+                alt="<%= movie.title %>"
+              />
+            </a>
+          </div>
+          <% }) %> <% } else { %>
+          <p>No movies found.</p>
+          <% } %>
         </div>
-        <% }) %> <% } else { %>
-        <p>No movies found.</p>
-        <% } %>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
       </div>
 
-      <h1>Now Playing Movies</h1>
+      <h2 class="playing">Now Playing Movies</h2>
 
-      <div id="movies">
-        <% if (nowPlayingMovies && nowPlayingMovies.length > 0) { %> <%
-        nowPlayingMovies.forEach(movie => { %>
-        <div class="movie">
-          <a href="/detail?id=<%= movie.id %>">
-            <img
-              src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>"
-              alt="<%= movie.title %>"
-            />
-            <h2><%= movie.title %></h2>
-            <p>Rating: <%= movie.vote_average %>/10</p>
-          </a>
+      <!-- Slider main container -->
+      <div class="swiper">
+        <!-- Additional required wrapper -->
+        <div class="swiper-wrapper">
+          <!-- Slides -->
+          <% if (nowPlayingMovies && nowPlayingMovies.length > 0) { %> <%
+          nowPlayingMovies.forEach(movie => { %>
+          <div class="movie swiper-slide">
+            <a href="/detail?id=<%= movie.id %>">
+              <img
+                src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>"
+                alt="<%= movie.title %>"
+              />
+            </a>
+          </div>
+          <% }) %> <% } else { %>
+          <p>No movies found.</p>
+          <% } %>
         </div>
-        <% }) %> <% } else { %>
-        <p>No movies found.</p>
-        <% } %>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
       </div>
     </main>
 
     <footer><%- include('../partials/footer'); %></footer>
   </body>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="/scripts/home.js"></script>
 </html>

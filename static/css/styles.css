@@ -7,32 +7,57 @@
   box-sizing: border-box;
 }
 
-/* body {
+/* body{
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 80vh;
 } */
 
+/****** LOGIN ******/
+
 .login {
-  width: 20em;
-  height: 12em;
+  width: 20%;
   margin: auto;
   padding: 1em;
-  border: 0.3em, solid, rgb(175, 47, 175);
+  border: 0.3em, solid, #ffcc00;
   border-radius: 1.5em;
-  background-color: rgb(255, 239, 255);
+  background-color: rgba(64, 13, 13, 1);
 }
 
 .login_button {
   border: none;
   outline: none;
-  background-color: rgb(175, 47, 175);
+  background-color: #ffcc00;
   border-radius: 2em;
   width: 100%;
   height: 2em;
   color: white;
   margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.sign-in {
+  margin-left: .5em;
+  margin-bottom: .5em;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin: auto;
+}
+
+input {
+  margin: 0.5em 0;
+  padding: 0.5em;
+  border-radius: 0.5em;
+  border: none;
+}
+
+.switch-page {
+  padding: 1em;
 }
 
 /***** HEADER *****/
@@ -129,12 +154,7 @@ body {
   gap: 20px;
 }
 
-.movie {
-  background-color: #222;
-  border-radius: 8px;
-  padding: 15px;
-  text-align: center;
-}
+
 
 .movie img {
   max-width: 100%;
@@ -149,31 +169,39 @@ body {
 
 
 .movie-poster {
-  max-width: 30%;
-  padding-top: 2em;
-  padding-left: 2em;
-  padding-bottom: 2em;
-  padding-right: 2em;
+  width: 300px; /* Adjust poster size */
+  height: auto;
+  border-radius: 10px;
 }
 
 .movie-background-container {
-  background-color: darkslategray;
+  background-color: rgb(31, 33, 33);
 }
 
 .movie-container {
   display: flex;
-  gap: 2em;
-  max-width: 85%;
-  margin: auto;
+  align-items: stretch; /* Stretches both items to the same height */
+  gap: 20px; /* Space between the poster and details */
+  max-width: 80%; /* Limits width */
+  margin: 0 auto; /* Centers the container */
+  padding-bottom: 1em; /* Space below the section */
+  padding-top: 1em;
 }
 
 .movie-details {
+  flex: 1; /* Allows the details section to take remaining space */
   display: flex;
-  flex-direction: column; /* Zet titel boven de info */
+  flex-direction: column;
+  justify-content: space-between; /* Pushes title to the top, and info to the bottom */
 }
 
 .movie-title {
-  font-size: 5em;
+  margin: 0; /* Remove extra margins */
+  font-size: 3em;
+}
+
+.movie-info {
+  max-width: 100%;
 }
 
 .movie-info p {
@@ -199,7 +227,7 @@ ul {
   gap: 2em; /* Ruimte tussen de castleden */
   padding-bottom: 2em; /* Optioneel, om te zorgen dat de scrollbalk niet tegen de rand komt */
   margin-top: 2em; /* Optioneel, ruimte boven de cast sectie */
-  max-width: 60%; /* Zorgt ervoor dat de cast-container niet breder wordt dan 60% van de schermbreedte */
+  max-width: 80%; /* Zorgt ervoor dat de cast-container niet breder wordt dan 60% van de schermbreedte */
   margin-left: auto; /* Centraal uitlijnen */
   margin-right: auto; /* Centraal uitlijnen */
 }
@@ -217,22 +245,4 @@ ul {
 
 .cast-member p {
   margin-top: 5px; /* Ruimte tussen de afbeelding en naam */
-}
-
-.dropdown-content {
-  display: none;
-  
-}
-
-.genres {
-  position:relative;
-  display: inline-block;
-  
-}
-.show {
-  display: block;
-}
-
-.button_genres {
-  background-color: #ffcc00;
 }
