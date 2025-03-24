@@ -9,7 +9,7 @@ const { trending, nowplaying } = require("./api");
 const saltRounds = 10;
 
 const app = express();
-const PORT = 3000;
+const PORT = 100;
 
 // Instellen van de view engine
 app.set("view engine", "ejs");

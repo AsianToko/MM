@@ -218,3 +218,21 @@ ul {
 .cast-member p {
   margin-top: 5px; /* Ruimte tussen de afbeelding en naam */
 }
+
+.dropdown-content {
+  display: none;
+  
+}
+
+.genres {
+  position:relative;
+  display: inline-block;
+  
+}
+.show {
+  display: block;
+}
+
+.button_genres {
+  background-color: #ffcc00;
+}
