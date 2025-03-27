@@ -13,7 +13,17 @@
       <h1>Welkom, <%= username %>!</h1>
       <p>Dit is je accountpagina.</p>
       <a href="/logout">Uitloggen</a>
-      <p>ello</p>
+
+      <h2>Opgeslagen Films</h2>
+      <% if (savedMovies && savedMovies.length > 0) { %>
+      <ul>
+        <% savedMovies.forEach(movie => { %>
+        <li><%= movie.title %></li>
+        <% }) %>
+      </ul>
+      <% } else { %>
+      <p>Je hebt nog geen films opgeslagen.</p>
+      <% } %>
     </main>
 
     <footer><%- include('../partials/footer'); %></footer>

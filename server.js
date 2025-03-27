@@ -120,18 +120,33 @@ app.post("/login", async (req, res) => {
   }
 });
 
-// Account page route
+// Route to save a movie to the user's account
+app.post("/save-movie", (req, res) => {
+  const { movieId, movieTitle } = req.body;
+
+  if (!req.session.savedMovies) {
+    req.session.savedMovies = [];
+  }
+
+  // Avoid duplicates
+  if (!req.session.savedMovies.some((movie) => movie.id === movieId)) {
+    req.session.savedMovies.push({ id: movieId, title: movieTitle });
+  }
+
+  res.redirect("/account");
+});
+
+// Route to view saved movies
 app.get("/account", (req, res) => {
   try {
     if (req.session && req.session.username) {
-      console.log("Rendering account page for:", req.session.username); // Debug log
-      res.render("pages/account", { username: req.session.username });
+      const savedMovies = req.session.savedMovies || [];
+      res.render("pages/account", { username: req.session.username, savedMovies });
     } else {
-      console.log("No session found, redirecting to login"); // Debug log
       res.redirect("/login");
     }
   } catch (err) {
-    console.error("Error rendering account page:", err); // Log the error
+    console.error("Error rendering account page:", err);
     res.status(500).send("Interne serverfout.");
   }
 });
