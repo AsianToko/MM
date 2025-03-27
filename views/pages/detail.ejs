@@ -30,6 +30,15 @@
                 genre.name).join(', ') %>
               </p>
             </div>
+            <form action="/save-movie" method="POST">
+              <input type="hidden" name="movieId" value="<%= movie.id %>" />
+              <input
+                type="hidden"
+                name="movieTitle"
+                value="<%= movie.title %>"
+              />
+              <button type="submit">Opslaan</button>
+            </form>
           </div>
         </div>
       </div>
