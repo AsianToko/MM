@@ -28,7 +28,7 @@ app.use(
     secret: "your-secret-key", // Replace with a secure secret key
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: true }, // Set `secure: true` if using HTTPS
+    cookie: { secure: false }, // Set `secure: true` only if using HTTPS
   })
 );
 
@@ -108,8 +108,10 @@ app.post("/login", async (req, res) => {
 
     if (user && (await bcrypt.compare(password, user.password))) {
       req.session.username = username; // Store username in session
+      console.log("User logged in:", username); // Debug log
       res.redirect("/account"); // Redirect to account page
     } else {
+      console.log("Invalid login attempt"); // Debug log
       res.status(401).send(`<h2>Ongeldige gebruikersnaam of wachtwoord</h2><a href="/login">Opnieuw proberen</a>`);
     }
   } catch (err) {
@@ -122,8 +124,10 @@ app.post("/login", async (req, res) => {
 app.get("/account", (req, res) => {
   try {
     if (req.session && req.session.username) {
+      console.log("Rendering account page for:", req.session.username); // Debug log
       res.render("pages/account", { username: req.session.username });
     } else {
+      console.log("No session found, redirecting to login"); // Debug log
       res.redirect("/login");
     }
   } catch (err) {
