@@ -7,6 +7,7 @@ const bcrypt = require("bcrypt");
 const xss = require("xss");
 const { trending, nowplaying } = require("./api");
 const saltRounds = 10;
+const session = require("express-session"); // Import express-session
 
 const app = express();
 const PORT = 3000;
@@ -20,6 +21,16 @@ app.use(express.static(path.join(__dirname, "static")));
 
 // Middleware om form-data te verwerken
 app.use(express.urlencoded({ extended: true }));
+
+// Configure session middleware
+app.use(
+  session({
+    secret: "your-secret-key", // Replace with a secure secret key
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true }, // Set `secure: true` if using HTTPS
+  })
+);
 
 // MongoDB connectie-instellingen
 const uri = "mongodb+srv://admin:admin@mmdb.barfq.mongodb.net/?retryWrites=true&w=majority&appName=MMdb";
@@ -96,12 +107,27 @@ app.post("/login", async (req, res) => {
     const user = await usersCollection.findOne({ username });
 
     if (user && (await bcrypt.compare(password, user.password))) {
-      res.send(`<h2>Welkom, ${username}!</h2>`);
+      req.session.username = username; // Store username in session
+      res.redirect("/account"); // Redirect to account page
     } else {
-      res.send(`<h2>Ongeldige gebruikersnaam of wachtwoord</h2><a href="/">Opnieuw proberen</a>`);
+      res.status(401).send(`<h2>Ongeldige gebruikersnaam of wachtwoord</h2><a href="/login">Opnieuw proberen</a>`);
     }
   } catch (err) {
-    console.error("Error bij inloggen:", err);
+    console.error("Error bij inloggen:", err); // Log the error
+    res.status(500).send("Interne serverfout.");
+  }
+});
+
+// Account page route
+app.get("/account", (req, res) => {
+  try {
+    if (req.session && req.session.username) {
+      res.render("pages/account", { username: req.session.username });
+    } else {
+      res.redirect("/login");
+    }
+  } catch (err) {
+    console.error("Error rendering account page:", err); // Log the error
     res.status(500).send("Interne serverfout.");
   }
 });
@@ -111,15 +137,17 @@ app.get("/detail", async (req, res) => {
   const movieId = req.query.id;
   try {
     const movieResponse = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?language=en-US`, options);
+    if (!movieResponse.ok) throw new Error(`TMDB API error: ${movieResponse.statusText}`);
     const movie = await movieResponse.json();
 
     const creditsResponse = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/credits?language=en-US`, options);
+    if (!creditsResponse.ok) throw new Error(`TMDB API error: ${creditsResponse.statusText}`);
     const credits = await creditsResponse.json();
 
     res.render("pages/detail", { movie, cast: credits.cast });
   } catch (error) {
-    console.error("Error fetching movie details:", error);
-    res.status(500).send("Internal Server Error");
+    console.error("Error fetching movie details:", error); // Log the error
+    res.status(500).send("Interne serverfout.");
   }
 });
 
@@ -136,7 +164,7 @@ app.get("/check-mongodb-connection", (req, res) => {
 const startServer = async () => {
   try {
     await client.connect();
-    console.log("✅ Verbonden met MongoDB!");
+    console.log(" Verbonden met MongoDB!");
 
     app.listen(PORT, () => {
       console.log(` Server draait op http://localhost:${PORT}`);
