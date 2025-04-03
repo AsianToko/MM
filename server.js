@@ -10,6 +10,7 @@ const saltRounds = 10;
 const session = require("express-session"); // Importeer express-session
 
 const multer = require("multer");
+const fs = require("fs");
 
 // Set up storage for profile pictures
 const storage = multer.diskStorage({
@@ -22,7 +23,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 const app = express();
-const PORT = 3000;
+const PORT = 4000;
 
 // Instellen van de view engine
 app.set("view engine", "ejs");
@@ -119,7 +120,10 @@ app.post("/register", async (req, res) => {
   }
 });
 
+// Update the /upload-profile-pic route
 app.post("/upload-profile-pic", upload.single("profilePic"), async (req, res) => {
+  console.log("Session username:", req.session.username); // Debug log
+
   if (!req.session.username) {
     return res.status(401).send("Je moet ingelogd zijn.");
   }
@@ -128,12 +132,18 @@ app.post("/upload-profile-pic", upload.single("profilePic"), async (req, res) =>
     const database = client.db("login");
     const usersCollection = database.collection("login");
 
-    const profilePicUrl = `/uploads/${req.file.filename}`;
+    // Read the uploaded file and encode it as Base64
+    const profilePicPath = req.file.path;
+    const profilePicData = fs.readFileSync(profilePicPath, { encoding: "base64" });
 
+    // Update the user's profile picture in the database
     await usersCollection.updateOne(
       { username: req.session.username },
-      { $set: { profilePicture: profilePicUrl } }
+      { $set: { profilePicture: profilePicData } }
     );
+
+    // Delete the uploaded file from the local filesystem
+    fs.unlinkSync(profilePicPath);
 
     res.redirect("/account");
   } catch (err) {
@@ -186,27 +196,40 @@ app.get("/logout", (req, res) => {
   });
 });
 
+// Update the /save-movie route
+app.post("/save-movie", async (req, res) => {
+  const { movieId, movieTitle, posterPath } = req.body;
 
-app.post("/save-movie", (req, res) => {
-  const { movieId, movieTitle, posterPath } = req.body; // Haal ook de posterPath op
-
-  if (!req.session.savedMovies) {
-    req.session.savedMovies = [];
+  if (!req.session.username) {
+    return res.status(401).send("Je moet ingelogd zijn.");
   }
 
-  // Zorg dat er geen dubbele films in komen te staan
-  if (!req.session.savedMovies.some((movie) => movie.id === movieId)) {
-    req.session.savedMovies.push({
-      id: movieId,
-      title: movieTitle,
-      poster_path: posterPath,
-    }); // Voeg poster_path toe
-  }
+  try {
+    const database = client.db("login");
+    const usersCollection = database.collection("login");
 
-  res.redirect("/account");
+    // Add the movie to the user's savedMovies array in the database
+    await usersCollection.updateOne(
+      { username: req.session.username },
+      {
+        $addToSet: {
+          savedMovies: {
+            id: movieId,
+            title: movieTitle,
+            poster_path: posterPath,
+          },
+        },
+      }
+    );
+
+    res.redirect("/account");
+  } catch (err) {
+    console.error("Error saving movie:", err);
+    res.status(500).send("Er is een fout opgetreden.");
+  }
 });
 
-// Route naar accountpagina
+// Update the /account route to render the profile picture from the database
 app.get("/account", async (req, res) => {
   if (!req.session.username) {
     return res.redirect("/login");
@@ -220,8 +243,10 @@ app.get("/account", async (req, res) => {
 
     res.render("pages/account", {
       username: req.session.username,
-      profilePicture: user.profilePicture || "/default-avatar.png",
-      savedMovies: req.session.savedMovies || [],
+      profilePicture: user.profilePicture
+        ? `data:image/png;base64,${user.profilePicture}` // Render Base64 image
+        : "/default-avatar.png",
+      savedMovies: user.savedMovies || [],
     });
   } catch (err) {
     console.error("Error rendering account page:", err);
