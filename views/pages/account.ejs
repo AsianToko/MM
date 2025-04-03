@@ -10,22 +10,33 @@
     <header><%- include('../partials/header'); %></header>
 
     <main>
-      <h1>Welkom, <%= username %>!</h1>
-      <p>Dit is je accountpagina.</p>
-      <a href="/logout">Uitloggen</a>
-
-      <h2>Opgeslagen Films</h2>
-      <% if (savedMovies && savedMovies.length > 0) { %>
-      <ul>
-        <% savedMovies.forEach(movie => { %>
-        <li><%= movie.title %></li>
-        <% }) %>
-      </ul>
-      <% } else { %>
-      <p>Je hebt nog geen films opgeslagen.</p>
-      <% } %>
+      <div class="account-container">
+        <div class="account-stats">
+          <h1><%= username %>!</h1>
+          <p>Dit is je accountpagina.</p>
+          <a href="/logout">Uitloggen</a>
+        </div>
+      </div>
+      <div class="saved-movies">
+        <h2>Opgeslagen Films</h2>
+        <% if (savedMovies && savedMovies.length > 0) { %>
+        <ul class="saved-movies-container">
+          <% savedMovies.forEach(movie => { %>
+          <li>
+            <img
+              src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>"
+              alt="<%= movie.title %>"
+            />
+          </li>
+          <% }) %>
+        </ul>
+        <% } else { %>
+        <p>Je hebt nog geen films opgeslagen.</p>
+        <% } %>
+      </div>
     </main>
 
     <footer><%- include('../partials/footer'); %></footer>
   </body>
+  <script src="/scripts/search.js"></script>
 </html>

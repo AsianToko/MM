@@ -1,11 +1,22 @@
+<!-- Search Bar -->
 <link rel="stylesheet" href="/css/styles.css" />
-<h1 class="title"> Movie Matching</h1>
+<h1 class="title">Movie Matching</h1>
 <div class="search-container">
   <div class="search-bar">
-    <input type="text" placeholder="Search...">
-    <button>🔍</button>
+    <input type="text" id="search-input" placeholder="Search..." />
+    <button id="search-button">🔍</button>
   </div>
 </div>
+
+<!-- Modal for Search Results -->
+<div id="search-modal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <div id="search-results"></div>
+    <!-- Movie results will show here -->
+  </div>
+</div>
+
 <div class="nav-container">
   <nav>
     <a href="/">Home</a>

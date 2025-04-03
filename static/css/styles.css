@@ -42,11 +42,11 @@ a {
 }
 
 .sign-in {
-  margin-left: .5em;
-  margin-bottom: .5em;
+  margin-left: 0.5em;
+  margin-bottom: 0.5em;
 }
 
-form {
+.login-register-form {
   display: flex;
   flex-direction: column;
   width: 90%;
@@ -142,6 +142,105 @@ nav a:hover {
   background: #e6b800;
 }
 
+#search-results {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+#search-results img {
+  width: 4em; /* Adjust the width as needed */
+  height: auto;
+  margin-right: 10px;
+}
+
+/* Styling for the modal */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed;
+  z-index: 1000; /* Sit on top of other content */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scrolling if needed */
+  background-color: rgba(0, 0, 0, 0.4); /* Black with opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: white;
+  margin: 10% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* You can adjust the width here */
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+/* Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Styling for search results inside the modal */
+#search-results {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+#search-results .movie-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #ccc;
+}
+
+#search-results .movie-item:hover {
+  background-color: #f4f4f4;
+}
+
+#search-results img {
+  width: 7em;
+  height: auto;
+  object-fit: cover;
+  margin-right: 1.5em;
+}
+
+#search-results p {
+  font-size: 2em;
+}
+
+.movie-item {
+  cursor: pointer;
+  width: 150px;
+  text-align: center;
+}
+
+.movie-item img {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.movie-item p {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #333;
+}
+
 /* Algemene stijlen */
 body {
   font-family: Arial, sans-serif;
@@ -150,15 +249,6 @@ body {
   margin: 0;
   padding: 0;
 }
-
-/* Grid voor films op de homepagina */
-#movies {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-}
-
-
 
 .movie img {
   max-width: 100%;
@@ -170,7 +260,6 @@ body {
 /****** DETAIL PAGINA ******/
 /***************************/
 /***************************/
-
 
 .movie-poster {
   width: 300px; /* Adjust poster size */
@@ -193,10 +282,10 @@ body {
 }
 
 .movie-details {
-  flex: 1; /* Allows the details section to take remaining space */
+  flex: 1; /* neemt resterende ruimte in */
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Pushes title to the top, and info to the bottom */
+  justify-content: space-between; /* titel naar boven, description omlaag */
 }
 
 .movie-title {
@@ -231,11 +320,23 @@ span {
   font-size: 3.5em;
 }
 
+.save-button {
+  background-color: #ffcc00;
+  color: black;
+  border: none;
+  padding: 0.5em 1em;
+  border-radius: 0.5em;
+  cursor: pointer;
+  font-size: 1.5em;
+  margin-top: 1em;
+  max-width: 20%;
+}
+
 /***** CAST *****/
 
 .cast-container {
   display: flex;
-  overflow-x: auto; 
+  overflow-x: auto;
   gap: 2em; /* Ruimte tussen de castleden */
   padding-bottom: 2em; /* Optioneel, om te zorgen dat de scrollbalk niet tegen de rand komt */
   margin-top: 2em; /* Optioneel, ruimte boven de cast sectie */
@@ -252,7 +353,7 @@ span {
 
 .cast-member img {
   width: 100%; /* Zorgt ervoor dat de afbeelding de hele breedte van de container vult */
-  border-radius: 1em; 
+  border-radius: 1em;
 }
 
 .cast-member p {
@@ -264,13 +365,49 @@ span {
   margin-top: 2em;
 }
 
+/***************************/
+/***************************/
+/******** Account **********/
+/***************************/
+/***************************/
+.saved-movies {
+  margin-left: 2em;
+  margin-top: 2em;
+}
+
+.saved-movies-container {
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding-top: 1em;
+}
+
+.saved-movies-container li {
+  display: inline-block;
+  margin-right: 1em;
+}
+
+.saved-movies-container img {
+  width: 15em; /* Adjust the width as needed */
+  height: auto;
+  border-radius: 5px;
+}
+
+.account-container {
+  background-color: rgb(31, 33, 33);
+}
+
+.account-stats {
+  display: flex;
+  justify-content: space-around;
+  padding: 2em;
+}
 
 /***************************/
 /***************************/
 /********* FOOTER **********/
 /***************************/
 /***************************/
-
 
 .footer {
   background-color: rgba(64, 13, 13, 1);
@@ -290,8 +427,6 @@ span {
 .footer a:hover {
   text-decoration: underline;
 }
-
-
 
 /*********/
 /*********/
@@ -331,3 +466,4 @@ span {
   --swiper-pagination-color: #ffcc00;
   --swiper-pagination-bullet-inactive-color: #fff;
 }
+

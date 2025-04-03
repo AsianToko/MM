@@ -120,17 +120,16 @@ app.post("/login", async (req, res) => {
   }
 });
 
-// Route to save a movie to the user's account
 app.post("/save-movie", (req, res) => {
-  const { movieId, movieTitle } = req.body;
+  const { movieId, movieTitle, posterPath } = req.body; // Haal ook de posterPath op
 
   if (!req.session.savedMovies) {
     req.session.savedMovies = [];
   }
 
-  // Avoid duplicates
+  // Vermijd dubbele films
   if (!req.session.savedMovies.some((movie) => movie.id === movieId)) {
-    req.session.savedMovies.push({ id: movieId, title: movieTitle });
+    req.session.savedMovies.push({ id: movieId, title: movieTitle, poster_path: posterPath }); // Voeg poster_path toe
   }
 
   res.redirect("/account");
