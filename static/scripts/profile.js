@@ -7,3 +7,5 @@ document
   .addEventListener("change", function () {
     document.getElementById("profile-form").submit();
   });
+
+  
