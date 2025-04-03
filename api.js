@@ -1,4 +1,4 @@
-// Description: This file contains the code to fetch movies from the API, including trending and now playing movies.
+// Description: This file contains the code to fetch movies and TV shows from the API, including trending, now playing movies, and popular TV shows.
 
 const fetch = require("node-fetch");
 
@@ -7,9 +7,8 @@ const options = {
   headers: {
     accept: 'application/json',
     Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5NTIyMDU2NmFkZjhkZTE3MzkzYmRjZmIyYTEzZjExNSIsIm5iZiI6MTc0MDY4NDY3Mi4wNjYsInN1YiI6IjY3YzBiZDgwYmM2OTM1YTAwMWEyNWU3NSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.hv_If1vHVfOooP9pySjD1zYPAe2MTK6I23DrlfFKuV4'
-},
+  },
 };
-
 
 async function trending() {
   try {
@@ -35,4 +34,21 @@ async function nowplaying() {
   }
 }
 
-module.exports = { trending, nowplaying };
+async function popularTV() {
+  const response = await fetch(
+    "https://api.themoviedb.org/3/tv/popular?language=en-US&page=1",
+    {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization: `Bearer ${process.env.TMDB_BEARER_TOKEN}`,
+      },
+    }
+  );
+  if (!response.ok) {
+    throw new Error(`TMDB API error: ${response.statusText}`);
+  }
+  return await response.json();
+}
+
+module.exports = { trending, nowplaying, popularTV };

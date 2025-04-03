@@ -5,7 +5,7 @@ const { MongoClient } = require("mongodb");
 require("dotenv").config();
 const bcrypt = require("bcrypt");
 const xss = require("xss");
-const { trending, nowplaying } = require("./api");
+const { trending, nowplaying, popularTV } = require("./api"); // Ensure popularTV is imported
 const saltRounds = 10;
 const session = require("express-session"); // Importeer express-session
 
@@ -69,19 +69,18 @@ app.get("/", async (req, res) => {
   try {
     const trendingMovies = await trending();
     const nowPlayingMovies = await nowplaying();
+    const popularTVShows = await popularTV(); // Fetch popular TV series
 
-    console.log("Trending movies:", trendingMovies.results.length);
-    console.log("Now playing movies:", nowPlayingMovies.results.length);
+    console.log("Popular TV Shows:", popularTVShows.results); // Debug log
 
     res.render("pages/home", {
       trendingMovies: trendingMovies.results,
       nowPlayingMovies: nowPlayingMovies.results,
+      popularTVShows: popularTVShows.results, // Pass popular TV shows to the view
     });
   } catch (error) {
-    console.error("Fout bij het ophalen van films:", error);
-    res
-      .status(500)
-      .send("Er is een fout opgetreden bij het laden van de films.");
+    console.error("Error fetching data:", error);
+    res.status(500).send("An error occurred while loading data.");
   }
 });
 
@@ -279,6 +278,33 @@ app.get("/detail", async (req, res) => {
   } catch (error) {
     console.error("Error fetching movie details:", error);
     res.status(500).send("Interne serverfout.");
+  }
+});
+
+// Detailpagina voor TV series
+app.get("/detail-tv", async (req, res) => {
+  const seriesId = req.query.id;
+  try {
+    const seriesResponse = await fetch(
+      `https://api.themoviedb.org/3/tv/${seriesId}?language=en-US`,
+      options
+    );
+    if (!seriesResponse.ok)
+      throw new Error(`TMDB API error: ${seriesResponse.statusText}`);
+    const series = await seriesResponse.json();
+
+    const creditsResponse = await fetch(
+      `https://api.themoviedb.org/3/tv/${seriesId}/credits?language=en-US`,
+      options
+    );
+    if (!creditsResponse.ok)
+      throw new Error(`TMDB API error: ${creditsResponse.statusText}`);
+    const credits = await creditsResponse.json();
+
+    res.render("pages/detail-tv", { series, cast: credits.cast });
+  } catch (error) {
+    console.error("Error fetching TV series details:", error);
+    res.status(500).send("An error occurred while fetching TV series details.");
   }
 });
 
