@@ -7,7 +7,7 @@ const bcrypt = require("bcrypt");
 const xss = require("xss");
 const { trending, nowplaying } = require("./api");
 const saltRounds = 10;
-const session = require("express-session"); // Import express-session
+const session = require("express-session"); // Importeer express-session
 
 const app = express();
 const PORT = 3000;
@@ -33,7 +33,8 @@ app.use(
 );
 
 // MongoDB connectie-instellingen
-const uri = "mongodb+srv://admin:admin@mmdb.barfq.mongodb.net/?retryWrites=true&w=majority&appName=MMdb";
+const uri =
+  "mongodb+srv://admin:admin@mmdb.barfq.mongodb.net/?retryWrites=true&w=majority&appName=MMdb";
 const client = new MongoClient(uri);
 
 // TMDB API instellingen
@@ -54,10 +55,15 @@ app.get("/", async (req, res) => {
     console.log("Trending movies:", trendingMovies.results.length);
     console.log("Now playing movies:", nowPlayingMovies.results.length);
 
-    res.render("pages/home", { trendingMovies: trendingMovies.results, nowPlayingMovies: nowPlayingMovies.results });
+    res.render("pages/home", {
+      trendingMovies: trendingMovies.results,
+      nowPlayingMovies: nowPlayingMovies.results,
+    });
   } catch (error) {
     console.error("Fout bij het ophalen van films:", error);
-    res.status(500).send("Er is een fout opgetreden bij het laden van de films.");
+    res
+      .status(500)
+      .send("Er is een fout opgetreden bij het laden van de films.");
   }
 });
 
@@ -79,7 +85,9 @@ app.post("/register", async (req, res) => {
     const existingUser = await usersCollection.findOne({ username });
 
     if (existingUser) {
-      res.send(`<h2>Gebruikersnaam is al in gebruik</h2><a href="/register">Opnieuw proberen</a>`);
+      res.send(
+        `<h2>Gebruikersnaam is al in gebruik</h2><a href="/register">Opnieuw proberen</a>`
+      );
     } else {
       await usersCollection.insertOne({ username, password: hashedPassword });
       res.send(`<h2>Account succesvol aangemaakt</h2><a href="/">Inloggen</a>`);
@@ -112,7 +120,11 @@ app.post("/login", async (req, res) => {
       res.redirect("/account"); // Redirect to account page
     } else {
       console.log("Invalid login attempt"); // Debug log
-      res.status(401).send(`<h2>Ongeldige gebruikersnaam of wachtwoord</h2><a href="/login">Opnieuw proberen</a>`);
+      res
+        .status(401)
+        .send(
+          `<h2>Ongeldige gebruikersnaam of wachtwoord</h2><a href="/login">Opnieuw proberen</a>`
+        );
     }
   } catch (err) {
     console.error("Error bij inloggen:", err); // Log the error
@@ -127,20 +139,27 @@ app.post("/save-movie", (req, res) => {
     req.session.savedMovies = [];
   }
 
-  // Vermijd dubbele films
+  // Zorg dat er geen dubbele films in komen te staan
   if (!req.session.savedMovies.some((movie) => movie.id === movieId)) {
-    req.session.savedMovies.push({ id: movieId, title: movieTitle, poster_path: posterPath }); // Voeg poster_path toe
+    req.session.savedMovies.push({
+      id: movieId,
+      title: movieTitle,
+      poster_path: posterPath,
+    }); // Voeg poster_path toe
   }
 
   res.redirect("/account");
 });
 
-// Route to view saved movies
+// Route naar accountpagina
 app.get("/account", (req, res) => {
   try {
     if (req.session && req.session.username) {
       const savedMovies = req.session.savedMovies || [];
-      res.render("pages/account", { username: req.session.username, savedMovies });
+      res.render("pages/account", {
+        username: req.session.username,
+        savedMovies,
+      });
     } else {
       res.redirect("/login");
     }
@@ -154,12 +173,20 @@ app.get("/account", (req, res) => {
 app.get("/detail", async (req, res) => {
   const movieId = req.query.id;
   try {
-    const movieResponse = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?language=en-US`, options);
-    if (!movieResponse.ok) throw new Error(`TMDB API error: ${movieResponse.statusText}`);
+    const movieResponse = await fetch(
+      `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`,
+      options
+    );
+    if (!movieResponse.ok)
+      throw new Error(`TMDB API error: ${movieResponse.statusText}`);
     const movie = await movieResponse.json();
 
-    const creditsResponse = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/credits?language=en-US`, options);
-    if (!creditsResponse.ok) throw new Error(`TMDB API error: ${creditsResponse.statusText}`);
+    const creditsResponse = await fetch(
+      `https://api.themoviedb.org/3/movie/${movieId}/credits?language=en-US`,
+      options
+    );
+    if (!creditsResponse.ok)
+      throw new Error(`TMDB API error: ${creditsResponse.statusText}`);
     const credits = await creditsResponse.json();
 
     res.render("pages/detail", { movie, cast: credits.cast });
