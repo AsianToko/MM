@@ -9,6 +9,18 @@ const { trending, nowplaying } = require("./api");
 const saltRounds = 10;
 const session = require("express-session"); // Importeer express-session
 
+const multer = require("multer");
+
+// Set up storage for profile pictures
+const storage = multer.diskStorage({
+  destination: "./static/uploads/",
+  filename: (req, file, cb) => {
+    cb(null, `${req.session.username}-${Date.now()}${path.extname(file.originalname)}`);
+  },
+});
+
+const upload = multer({ storage });
+
 const app = express();
 const PORT = 3000;
 
@@ -45,6 +57,11 @@ const options = {
     Authorization: `Bearer ${process.env.TMDB_BEARER_TOKEN}`,
   },
 };
+
+app.use((req, res, next) => {
+  res.locals.session = req.session; // Make session available in EJS views
+  next();
+});
 
 //  Homepagina met films van TMDB
 app.get("/", async (req, res) => {
@@ -89,12 +106,39 @@ app.post("/register", async (req, res) => {
         `<h2>Gebruikersnaam is al in gebruik</h2><a href="/register">Opnieuw proberen</a>`
       );
     } else {
-      await usersCollection.insertOne({ username, password: hashedPassword });
+      await usersCollection.insertOne({
+        username,
+        password: hashedPassword,
+        profilePicture: "/default-avatar.png", // Default profile picture
+      });
       res.send(`<h2>Account succesvol aangemaakt</h2><a href="/">Inloggen</a>`);
     }
   } catch (err) {
     console.error("Error bij registreren:", err);
     res.status(500).send("Interne serverfout.");
+  }
+});
+
+app.post("/upload-profile-pic", upload.single("profilePic"), async (req, res) => {
+  if (!req.session.username) {
+    return res.status(401).send("Je moet ingelogd zijn.");
+  }
+
+  try {
+    const database = client.db("login");
+    const usersCollection = database.collection("login");
+
+    const profilePicUrl = `/uploads/${req.file.filename}`;
+
+    await usersCollection.updateOne(
+      { username: req.session.username },
+      { $set: { profilePicture: profilePicUrl } }
+    );
+
+    res.redirect("/account");
+  } catch (err) {
+    console.error("Error updating profile picture:", err);
+    res.status(500).send("Er is een fout opgetreden.");
   }
 });
 
@@ -132,6 +176,17 @@ app.post("/login", async (req, res) => {
   }
 });
 
+app.get("/logout", (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.error("Fout bij uitloggen:", err);
+      return res.status(500).send("Er is een fout opgetreden.");
+    }
+    res.redirect("/login"); // Stuur de gebruiker terug naar de loginpagina
+  });
+});
+
+
 app.post("/save-movie", (req, res) => {
   const { movieId, movieTitle, posterPath } = req.body; // Haal ook de posterPath op
 
@@ -152,17 +207,22 @@ app.post("/save-movie", (req, res) => {
 });
 
 // Route naar accountpagina
-app.get("/account", (req, res) => {
+app.get("/account", async (req, res) => {
+  if (!req.session.username) {
+    return res.redirect("/login");
+  }
+
   try {
-    if (req.session && req.session.username) {
-      const savedMovies = req.session.savedMovies || [];
-      res.render("pages/account", {
-        username: req.session.username,
-        savedMovies,
-      });
-    } else {
-      res.redirect("/login");
-    }
+    const database = client.db("login");
+    const usersCollection = database.collection("login");
+
+    const user = await usersCollection.findOne({ username: req.session.username });
+
+    res.render("pages/account", {
+      username: req.session.username,
+      profilePicture: user.profilePicture || "/default-avatar.png",
+      savedMovies: req.session.savedMovies || [],
+    });
   } catch (err) {
     console.error("Error rendering account page:", err);
     res.status(500).send("Interne serverfout.");

@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/css/styles.css" />
   </head>
   <body>
+    <header><%- include('../partials/header'); %></header>
     <div class="login">
       <h2 class="sign-in">Create an Account</h2>
       <form class="login-register-form" action="/register" method="POST">
@@ -30,5 +31,6 @@
       </form>
       <a class="switch-page" href="/login">Login</a>
     </div>
+    <footer><%- include('../partials/footer'); %></footer>
   </body>
 </html>

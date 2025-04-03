@@ -11,10 +11,21 @@
 
     <main>
       <div class="account-container">
+        <div class="profile-section">
+          <!-- Clickable Profile Picture -->
+          <label for="profile-input">
+            <img id="profile-pic" src="<%= profilePicture %>" alt="Profile Picture" />
+          </label>
+        
+          <!-- Hidden File Input -->
+          <form id="profile-form" action="/upload-profile-pic" method="POST" enctype="multipart/form-data">
+            <input type="file" id="profile-input" name="profilePic" accept="image/*" style="display: none;" />
+          </form>
+        </div>
         <div class="account-stats">
-          <h1><%= username %>!</h1>
+          <h1>Welkom <%= username %>!</h1>
           <p>Dit is je accountpagina.</p>
-          <a href="/logout">Uitloggen</a>
+          <a href="/logout" class="logout-button">Uitloggen</a>
         </div>
       </div>
       <div class="saved-movies">
@@ -39,4 +50,5 @@
     <footer><%- include('../partials/footer'); %></footer>
   </body>
   <script src="/scripts/search.js"></script>
+  <script src="/scripts/profile.js"></script>
 </html>

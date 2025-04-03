@@ -13,13 +13,20 @@
   <div class="modal-content">
     <span class="close">&times;</span>
     <div id="search-results"></div>
-    <!-- Movie results will show here -->
   </div>
 </div>
 
 <div class="nav-container">
   <nav>
     <a href="/">Home</a>
-    <a href="/register">Register</a>
+
+    <% if (locals.session.username) { %>
+      <a href="/account">Profile</a>
+      <a href="/logout">Logout</a>
+    <% } else { %>
+      <a href="/register">Register</a>
+      <a href="/login">Login</a>
+    <% } %>
+
   </nav>
 </div>

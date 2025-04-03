@@ -361,6 +361,24 @@ span {
 /******** Account **********/
 /***************************/
 /***************************/
+
+/* Profiel foto */
+#profile-pic {
+  width: 25em;
+  height: 25em;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #ffcc00;
+  display: block;
+  margin: 0 auto;
+  cursor: pointer;
+  transition: opacity 0.3s ease-in-out;
+}
+
+#profile-pic:hover {
+  opacity: 0.7; /* Slight transparency effect */
+}
+
 .saved-movies {
   margin-left: 2em;
   margin-top: 2em;
@@ -392,6 +410,21 @@ span {
   display: flex;
   justify-content: space-around;
   padding: 2em;
+}
+
+.logout-button {
+  display: inline-block;
+  padding: 1em 2em;
+  color: white;
+  background-color: #ffcc00;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #af8c01;
 }
 
 /***************************/
@@ -457,3 +490,5 @@ span {
   --swiper-pagination-color: #ffcc00;
   --swiper-pagination-bullet-inactive-color: #fff;
 }
+
+

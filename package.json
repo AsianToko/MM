@@ -55,6 +55,7 @@
     "mongodb": "^6.13.1",
     "mongodb-connection-string-url": "^3.0.2",
     "ms": "^2.0.0",
+    "multer": "^1.4.5-lts.2",
     "negotiator": "^0.6.3",
     "node": "^18.20.7",
     "node-bin-setup": "^1.1.3",
