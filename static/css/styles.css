@@ -80,21 +80,18 @@ header {
   font-weight: bold;
 }
 
-/* Center container (forces search bar into the middle) */
 .search-container {
   flex: 1;
   display: flex;
   justify-content: center;
 }
 
-/* Right-side container (navigation links) */
 .nav-container {
   display: flex;
   align-items: center;
   gap: 20px;
 }
 
-/* Navigation links */
 nav {
   display: flex;
   gap: 15px;
@@ -111,7 +108,7 @@ nav a:hover {
   color: #ffcc00;
 }
 
-/* Search bar styling */
+/* Zoekbalk styling */
 .search-bar {
   display: flex;
   align-items: center;
@@ -150,38 +147,34 @@ nav a:hover {
 }
 
 #search-results img {
-  width: 4em; /* Adjust the width as needed */
+  width: 4em;
   height: auto;
   margin-right: 10px;
 }
 
-/* Styling for the modal */
 .modal {
-  display: none; /* Hidden by default */
+  display: none; /* Wordt standaard verstopt */
   position: fixed;
-  z-index: 1000; /* Sit on top of other content */
+  z-index: 1000; /* Helemaal bovenaan van alle elementen */
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scrolling if needed */
-  background-color: rgba(0, 0, 0, 0.4); /* Black with opacity */
+  width: 100%;
+  height: 100%;
+  overflow: auto; /* Zorgt dat je kan scrollen als dit nodig is */
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
-/* Modal Content */
 .modal-content {
-  background-color: white;
+  background-color: rgba(64, 13, 13, 1);
   margin: 10% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%; /* You can adjust the width here */
+  padding: 1.5em;
+  width: 80%;
   max-height: 80vh;
   overflow-y: auto;
 }
 
-/* Close Button */
 .close {
-  color: #aaa;
+  color: #ffcc00;
   float: right;
   font-size: 28px;
   font-weight: bold;
@@ -194,27 +187,25 @@ nav a:hover {
   cursor: pointer;
 }
 
+/* bron: ChatGPT */
 /* Styling for search results inside the modal */
 #search-results {
   display: flex;
-  flex-direction: column;
-  gap: 1em;
+  flex-direction: row;
+  gap: 2em;
 }
 
 #search-results .movie-item {
   display: flex;
   align-items: center;
-  padding: 10px;
   cursor: pointer;
-  border-bottom: 1px solid #ccc;
+  overflow-x: hidden;
 }
 
-#search-results .movie-item:hover {
-  background-color: #f4f4f4;
-}
+
 
 #search-results img {
-  width: 7em;
+  width: 10em;
   height: auto;
   object-fit: cover;
   margin-right: 1.5em;
@@ -262,7 +253,7 @@ body {
 /***************************/
 
 .movie-poster {
-  width: 300px; /* Adjust poster size */
+  width: 300px;
   height: auto;
   border-radius: 10px;
 }
@@ -273,23 +264,23 @@ body {
 
 .movie-container {
   display: flex;
-  align-items: stretch; /* Stretches both items to the same height */
-  gap: 20px; /* Space between the poster and details */
-  max-width: 80%; /* Limits width */
-  margin: 0 auto; /* Centers the container */
-  padding-bottom: 1em; /* Space below the section */
+  align-items: stretch;
+  gap: 20px;
+  max-width: 80%;
+  margin: 0 auto;
+  padding-bottom: 1em;
   padding-top: 1em;
 }
 
 .movie-details {
-  flex: 1; /* neemt resterende ruimte in */
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between; /* titel naar boven, description omlaag */
 }
 
 .movie-title {
-  margin: 0; /* Remove extra margins */
+  margin: 0;
   font-size: 3em;
 }
 
@@ -337,27 +328,27 @@ span {
 .cast-container {
   display: flex;
   overflow-x: auto;
-  gap: 2em; /* Ruimte tussen de castleden */
-  padding-bottom: 2em; /* Optioneel, om te zorgen dat de scrollbalk niet tegen de rand komt */
-  margin-top: 2em; /* Optioneel, ruimte boven de cast sectie */
-  max-width: 80%; /* Zorgt ervoor dat de cast-container niet breder wordt dan 60% van de schermbreedte */
-  margin-left: auto; /* Centraal uitlijnen */
-  margin-right: auto; /* Centraal uitlijnen */
+  gap: 2em;
+  padding-bottom: 2em;
+  margin-top: 2em;
+  max-width: 80%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .cast-member {
-  flex-shrink: 0; /* Zorgt ervoor dat de castleden niet kleiner worden dan hun inhoud */
-  width: 13em; /* Pas de breedte aan op basis van hoe groot je de castleden wilt weergeven */
+  flex-shrink: 0;
+  width: 13em;
   text-align: center;
 }
 
 .cast-member img {
-  width: 100%; /* Zorgt ervoor dat de afbeelding de hele breedte van de container vult */
+  width: 100%;
   border-radius: 1em;
 }
 
 .cast-member p {
-  margin-top: 5px; /* Ruimte tussen de afbeelding en naam */
+  margin-top: 5px;
 }
 
 .cast-title {
@@ -388,7 +379,7 @@ span {
 }
 
 .saved-movies-container img {
-  width: 15em; /* Adjust the width as needed */
+  width: 15em;
   height: auto;
   border-radius: 5px;
 }
@@ -466,4 +457,3 @@ span {
   --swiper-pagination-color: #ffcc00;
   --swiper-pagination-bullet-inactive-color: #fff;
 }
-

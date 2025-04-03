@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
         movieElement.classList.add("movie-item");
         movieElement.innerHTML = `
           <img src="https://image.tmdb.org/t/p/w200${movie.poster_path}" alt="${movie.title}" />
-          <p>${movie.title}</p>
+      
         `;
         movieElement.addEventListener("click", () => {
           window.location.href = `/detail?id=${movie.id}`; // Ga naar de detailpagina
