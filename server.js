@@ -89,8 +89,7 @@ app.get("/", async (req, res) => {
 app.get("/register", (req, res) => {
   res.render("pages/register");
 });
-
-//  Gebruiker registreren
+// Gebruiker registreren
 app.post("/register", async (req, res) => {
   const username = xss(req.body.username);
   const password = xss(req.body.password);
@@ -112,7 +111,9 @@ app.post("/register", async (req, res) => {
         password: hashedPassword,
         profilePicture: "/default-avatar.png", // Default profile picture
       });
-      res.send(`<h2>Account succesvol aangemaakt</h2><a href="/">Inloggen</a>`);
+      // Direct inloggen en doorgaan naar account
+      req.session.username = username; // Store username in session
+      res.redirect("/account"); // Redirect naar accountpagina
     }
   } catch (err) {
     console.error("Error bij registreren:", err);
