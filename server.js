@@ -251,7 +251,7 @@ app.get("/detail", async (req, res) => {
 
     res.render("pages/detail", { movie, cast: credits.cast });
   } catch (error) {
-    console.error("Error fetching movie details:", error); // Log the error
+    console.error("Error fetching movie details:", error);
     res.status(500).send("Interne serverfout.");
   }
 });
