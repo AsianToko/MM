@@ -491,4 +491,30 @@ span {
   --swiper-pagination-bullet-inactive-color: #fff;
 }
 
+.movie-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.floating-delete-form {
+  position: absolute;
+  top: 0.3em;
+  right: 0.3em;
+}
+
+.floating-delete-button {
+  background: rgba(0, 0, 0, 0.6);
+  border: none;
+  color: white;
+  font-size: 1.2em;
+  border-radius: 50%;
+  padding: 0.2em 0.5em;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.floating-delete-button:hover {
+  background-color: #ff0000;
+  color: white;
+}
 
