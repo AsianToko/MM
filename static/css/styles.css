@@ -38,8 +38,8 @@
 }
 
 .sign-in {
-  margin-left: .5em;
-  margin-bottom: .5em;
+  margin-left: 0.5em;
+  margin-bottom: 0.5em;
 }
 
 form {
@@ -154,8 +154,6 @@ body {
   gap: 20px;
 }
 
-
-
 .movie img {
   max-width: 100%;
   border-radius: 8px;
@@ -166,7 +164,6 @@ body {
 /****** DETAIL PAGINA ******/
 /***************************/
 /***************************/
-
 
 .movie-poster {
   width: 300px; /* Adjust poster size */
@@ -223,7 +220,7 @@ ul {
 
 .cast-container {
   display: flex;
-  overflow-x: auto; 
+  overflow-x: auto;
   gap: 2em; /* Ruimte tussen de castleden */
   padding-bottom: 2em; /* Optioneel, om te zorgen dat de scrollbalk niet tegen de rand komt */
   margin-top: 2em; /* Optioneel, ruimte boven de cast sectie */
@@ -240,7 +237,7 @@ ul {
 
 .cast-member img {
   width: 100%; /* Zorgt ervoor dat de afbeelding de hele breedte van de container vult */
-  border-radius: 1em; 
+  border-radius: 1em;
 }
 
 .cast-member p {
@@ -252,13 +249,11 @@ ul {
   margin-top: 2em;
 }
 
-
 /***************************/
 /***************************/
 /********* FOOTER **********/
 /***************************/
 /***************************/
-
 
 .footer {
   background-color: rgba(64, 13, 13, 1);
@@ -278,8 +273,6 @@ ul {
 .footer a:hover {
   text-decoration: underline;
 }
-
-
 
 /*********/
 /*********/
@@ -318,4 +311,56 @@ ul {
 .swiper-pagination {
   --swiper-pagination-color: #ffcc00;
   --swiper-pagination-bullet-inactive-color: #fff;
+}
+
+.genre_box {
+  height: 3em;
+  width: 7em;
+  position: relative;
+  margin-bottom: 1em;
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 3px solid transparent;
+  outline: none;
+}
+
+input[type="checkbox"]:checked {
+  border: 0.2em solid #e6b800;
+  transition: 0.2s;
+}
+label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 70%;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  pointer-events: none;
+  color: #e6b800;
+  font-weight: bold;
+}
+
+.genre_container {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 1em;
+}
+
+.type_container {
+  display: flex;
+  margin-top: 1em;
+}
+
+.type {
+  margin-left: 1.5em;
 }

@@ -22,7 +22,8 @@ app.use(express.static(path.join(__dirname, "static")));
 app.use(express.urlencoded({ extended: true }));
 
 // MongoDB connectie-instellingen
-const uri = "mongodb+srv://admin:admin@mmdb.barfq.mongodb.net/?retryWrites=true&w=majority&appName=MMdb";
+const uri =
+  "mongodb+srv://admin:admin@mmdb.barfq.mongodb.net/?retryWrites=true&w=majority&appName=MMdb";
 const client = new MongoClient(uri);
 
 // TMDB API instellingen
@@ -43,16 +44,57 @@ app.get("/", async (req, res) => {
     console.log("Trending movies:", trendingMovies.results.length);
     console.log("Now playing movies:", nowPlayingMovies.results.length);
 
-    res.render("pages/home", { trendingMovies: trendingMovies.results, nowPlayingMovies: nowPlayingMovies.results });
+    res.render("pages/home", {
+      trendingMovies: trendingMovies.results,
+      nowPlayingMovies: nowPlayingMovies.results,
+    });
   } catch (error) {
     console.error("Fout bij het ophalen van films:", error);
-    res.status(500).send("Er is een fout opgetreden bij het laden van de films.");
+    res
+      .status(500)
+      .send("Er is een fout opgetreden bij het laden van de films.");
   }
 });
 
 //  Registratiepagina weergeven
 app.get("/register", (req, res) => {
   res.render("pages/register");
+});
+
+//  aanbevelingen weergeven
+app.get("/recommendation", async (req, res) => {
+  try {
+    const genresSelected = req.query.genre || [];
+    let allMovies = [];
+
+    if (genresSelected.length > 0) { 
+      const trendingMovies = await trending();
+      const nowPlayingMovies = await nowplaying();
+      allMovies = [...trendingMovies.results, ...nowPlayingMovies.results];
+
+      // Debugging: bekijk eerste filmobject
+      console.log("Eerste film in allMovies:", allMovies.length > 0 ? allMovies[0] : "Geen films gevonden");
+
+      // Filter films en series op basis van selectie
+      if (genresSelected.includes("Film")) {
+        allMovies = allMovies.filter(movie => movie.media_type !== "tv");
+      }
+      if (genresSelected.includes("Serie")) {
+        allMovies = allMovies.filter(movie => movie.media_type !== "movie");
+      }
+      if (genresSelected.includes("Drama")) {
+        allMovies = allMovies.filter(movie => movie.genre_ids && movie.genre_ids.includes(18));
+      }
+    }
+
+    res.render("pages/recommendation", {
+      selection: { genre: genresSelected },
+      allMovies
+    });
+  } catch (error) {
+    console.error("Fout bij het ophalen van films:", error);
+    res.status(500).send("Er is een fout opgetreden bij het laden van films.");
+  }
 });
 
 //  Gebruiker registreren
@@ -68,7 +110,9 @@ app.post("/register", async (req, res) => {
     const existingUser = await usersCollection.findOne({ username });
 
     if (existingUser) {
-      res.send(`<h2>Gebruikersnaam is al in gebruik</h2><a href="/register">Opnieuw proberen</a>`);
+      res.send(
+        `<h2>Gebruikersnaam is al in gebruik</h2><a href="/register">Opnieuw proberen</a>`
+      );
     } else {
       await usersCollection.insertOne({ username, password: hashedPassword });
       res.send(`<h2>Account succesvol aangemaakt</h2><a href="/">Inloggen</a>`);
@@ -98,7 +142,9 @@ app.post("/login", async (req, res) => {
     if (user && (await bcrypt.compare(password, user.password))) {
       res.send(`<h2>Welkom, ${username}!</h2>`);
     } else {
-      res.send(`<h2>Ongeldige gebruikersnaam of wachtwoord</h2><a href="/">Opnieuw proberen</a>`);
+      res.send(
+        `<h2>Ongeldige gebruikersnaam of wachtwoord</h2><a href="/">Opnieuw proberen</a>`
+      );
     }
   } catch (err) {
     console.error("Error bij inloggen:", err);
@@ -110,10 +156,16 @@ app.post("/login", async (req, res) => {
 app.get("/detail", async (req, res) => {
   const movieId = req.query.id;
   try {
-    const movieResponse = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?language=en-US`, options);
+    const movieResponse = await fetch(
+      `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`,
+      options
+    );
     const movie = await movieResponse.json();
 
-    const creditsResponse = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/credits?language=en-US`, options);
+    const creditsResponse = await fetch(
+      `https://api.themoviedb.org/3/movie/${movieId}/credits?language=en-US`,
+      options
+    );
     const credits = await creditsResponse.json();
 
     res.render("pages/detail", { movie, cast: credits.cast });
