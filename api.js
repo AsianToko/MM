@@ -1,6 +1,7 @@
 // Description: This file contains the code to fetch movies and TV shows from the API, including trending, now playing movies, and popular TV shows.
 
 const fetch = require("node-fetch");
+require("dotenv").config();
 
 const options = {
   method: 'GET',
@@ -34,21 +35,4 @@ async function nowplaying() {
   }
 }
 
-async function popularTV() {
-  const response = await fetch(
-    "https://api.themoviedb.org/3/tv/popular?language=en-US&page=1",
-    {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-        Authorization: `Bearer ${process.env.TMDB_BEARER_TOKEN}`,
-      },
-    }
-  );
-  if (!response.ok) {
-    throw new Error(`TMDB API error: ${response.statusText}`);
-  }
-  return await response.json();
-}
-
-module.exports = { trending, nowplaying, popularTV };
+module.exports = { trending, nowplaying };
