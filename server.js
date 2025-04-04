@@ -16,7 +16,10 @@ const fs = require("fs");
 const storage = multer.diskStorage({
   destination: "./static/uploads/",
   filename: (req, file, cb) => {
-    cb(null, `${req.session.username}-${Date.now()}${path.extname(file.originalname)}`);
+    cb(
+      null,
+      `${req.session.username}-${Date.now()}${path.extname(file.originalname)}`
+    );
   },
 });
 
@@ -122,36 +125,42 @@ app.post("/register", async (req, res) => {
 });
 
 // Update the /upload-profile-pic route
-app.post("/upload-profile-pic", upload.single("profilePic"), async (req, res) => {
-  console.log("Session username:", req.session.username); // Debug log
+app.post(
+  "/upload-profile-pic",
+  upload.single("profilePic"),
+  async (req, res) => {
+    console.log("Session username:", req.session.username); // Debug log
 
-  if (!req.session.username) {
-    return res.status(401).send("Je moet ingelogd zijn.");
+    if (!req.session.username) {
+      return res.status(401).send("Je moet ingelogd zijn.");
+    }
+
+    try {
+      const database = client.db("login");
+      const usersCollection = database.collection("login");
+
+      // Read the uploaded file and encode it as Base64
+      const profilePicPath = req.file.path;
+      const profilePicData = fs.readFileSync(profilePicPath, {
+        encoding: "base64",
+      });
+
+      // Update the user's profile picture in the database
+      await usersCollection.updateOne(
+        { username: req.session.username },
+        { $set: { profilePicture: profilePicData } }
+      );
+
+      // Delete the uploaded file from the local filesystem
+      fs.unlinkSync(profilePicPath);
+
+      res.redirect("/account");
+    } catch (err) {
+      console.error("Error updating profile picture:", err);
+      res.status(500).send("Er is een fout opgetreden.");
+    }
   }
-
-  try {
-    const database = client.db("login");
-    const usersCollection = database.collection("login");
-
-    // Read the uploaded file and encode it as Base64
-    const profilePicPath = req.file.path;
-    const profilePicData = fs.readFileSync(profilePicPath, { encoding: "base64" });
-
-    // Update the user's profile picture in the database
-    await usersCollection.updateOne(
-      { username: req.session.username },
-      { $set: { profilePicture: profilePicData } }
-    );
-
-    // Delete the uploaded file from the local filesystem
-    fs.unlinkSync(profilePicPath);
-
-    res.redirect("/account");
-  } catch (err) {
-    console.error("Error updating profile picture:", err);
-    res.status(500).send("Er is een fout opgetreden.");
-  }
-});
+);
 
 //  Loginpagina weergeven
 app.get("/login", (req, res) => {
@@ -230,6 +239,33 @@ app.post("/save-movie", async (req, res) => {
   }
 });
 
+app.post("/delete-movie", async (req, res) => {
+  const { movieId } = req.body;
+
+  if (!req.session.username) {
+    return res.status(401).send("Je moet ingelogd zijn.");
+  }
+
+  try {
+    const database = client.db("login");
+    const usersCollection = database.collection("login");
+
+    await usersCollection.updateOne(
+      { username: req.session.username },
+      {
+        $pull: {
+          savedMovies: { id: movieId },
+        },
+      }
+    );
+
+    res.redirect("/account");
+  } catch (err) {
+    console.error("Error deleting movie:", err);
+    res.status(500).send("Er is een fout opgetreden.");
+  }
+});
+
 // Update the /account route to render the profile picture from the database
 app.get("/account", async (req, res) => {
   if (!req.session.username) {
@@ -240,7 +276,9 @@ app.get("/account", async (req, res) => {
     const database = client.db("login");
     const usersCollection = database.collection("login");
 
-    const user = await usersCollection.findOne({ username: req.session.username });
+    const user = await usersCollection.findOne({
+      username: req.session.username,
+    });
 
     res.render("pages/account", {
       username: req.session.username,
