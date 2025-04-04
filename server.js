@@ -72,10 +72,6 @@ app.get("/recommendation", async (req, res) => {
       const nowPlayingMovies = await nowplaying();
       allMovies = [...trendingMovies.results, ...nowPlayingMovies.results];
 
-      // Debugging: bekijk eerste filmobject
-      console.log("Eerste film in allMovies:", allMovies.length > 0 ? allMovies[0] : "Geen films gevonden");
-
-      // Filter films en series op basis van selectie
       if (genresSelected.includes("Film")) {
         allMovies = allMovies.filter(movie => movie.media_type !== "tv");
       }
