@@ -64,6 +64,32 @@
         <div class="swiper-button-prev"></div>
         <div class="swiper-button-next"></div>
       </div>
+
+      <h2 class="playing">Popular TV Shows</h2>
+
+      <!-- Slider main container -->
+      <div class="swiper">
+        <!-- Additional required wrapper -->
+        <div class="swiper-wrapper">
+          <!-- Slides -->
+          <% if (popularTVShows && popularTVShows.length > 0) { %> <%
+          popularTVShows.forEach(show => { %>
+          <div class="movie swiper-slide">
+            <a href="/detail?id=<%= show.id %>">
+              <img
+                src="https://image.tmdb.org/t/p/w500<%= show.poster_path %>"
+                alt="<%= show.name %>"
+              />
+            </a>
+          </div>
+          <% }); %> <% } else { %>
+          <p>No TV shows found.</p>
+          <% } %>
+        </div>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+      </div>
     </main>
 
     <footer><%- include('../partials/footer'); %></footer>
