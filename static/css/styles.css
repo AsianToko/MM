@@ -520,3 +520,60 @@ span {
   color: white;
 }
 
+/*********/
+/*********/
+/** recommendations **/
+/*********/
+/*********/
+
+.genre_box {
+  height: 3em;
+  width: 7em;
+  position: relative;
+  margin-bottom: 1em;
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 3px solid transparent;
+  outline: none;
+}
+
+input[type="checkbox"]:checked {
+  border: 0.2em solid #e6b800;
+  transition: 0.2s;
+}
+label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 70%;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  pointer-events: none;
+  color: #e6b800;
+  font-weight: bold;
+}
+
+.genre_container {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 1em;
+}
+
+.type_container {
+  display: flex;
+  margin-top: 1em;
+}
+
+.type {
+  margin-left: 1.5em;
+}
