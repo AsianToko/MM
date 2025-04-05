@@ -39,12 +39,12 @@ async function series() {
   try {
     const response = await fetch('https://api.themoviedb.org/3/tv/popular?language=en-US&page=1', options);
     const data = await response.json();
-    console.log('Now playing movies:', data);
+    console.log('Series:', data);
     return data;
   } catch (error) {
-    console.error('Error fetching now playing movies:', error);
+    console.error('Error fetching series:', error);
     throw error;
   }
 }
 
-module.exports = { trending, nowplaying };
+module.exports = { trending, nowplaying, series };
