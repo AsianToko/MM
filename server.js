@@ -86,6 +86,39 @@ app.get("/", async (req, res) => {
   }
 });
 
+//  aanbevelingen weergeven
+app.get("/recommendation", async (req, res) => {
+  try {
+    const genresSelected = req.query.genre || [];
+    let allMovies = [];
+
+    if (genresSelected.length > 0) { 
+      const trendingMovies = await trending();
+      const nowPlayingMovies = await nowplaying();
+      allMovies = [...trendingMovies.results, ...nowPlayingMovies.results];
+
+      if (genresSelected.includes("Film")) {
+        allMovies = allMovies.filter(movie => movie.media_type !== "tv");
+      }
+      if (genresSelected.includes("Serie")) {
+        allMovies = allMovies.filter(movie => movie.media_type !== "movie");
+      }
+      if (genresSelected.includes("Drama")) {
+        allMovies = allMovies.filter(movie => movie.genre_ids && movie.genre_ids.includes(18));
+      }
+    }
+
+    res.render("pages/recommendation", {
+      selection: { genre: genresSelected },
+      allMovies
+    });
+  } catch (error) {
+    console.error("Fout bij het ophalen van films:", error);
+    res.status(500).send("Er is een fout opgetreden bij het laden van films.");
+  }
+});
+
+
 //  Registratiepagina weergeven
 app.get("/register", (req, res) => {
   res.render("pages/register");
