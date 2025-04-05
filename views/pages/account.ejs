@@ -10,76 +10,77 @@
     <header><%- include('../partials/header'); %></header>
 
     <main>
-      <div class="account-container">
-        <div class="profile-section">
-          <!-- Clickable Profile Picture -->
-          <label for="profile-input">
-            <img
-              id="profile-pic"
-              src="<%= profilePicture %>"
-              alt="Profile Picture"
-            />
-          </label>
+      <section>
+        <div class="account-container">
+          <div class="profile-section">
+            <label for="profile-input">
+              <img
+                id="profile-pic"
+                src="<%= profilePicture %>"
+                alt="Profile Picture"
+              />
+            </label>
+            <form
+              id="profile-form"
+              action="/upload-profile-pic"
+              method="POST"
+              enctype="multipart/form-data"
+            >
+              <input
+                type="file"
+                id="profile-input"
+                name="profilePic"
+                accept="image/*"
+                style="display: none"
+              />
+            </form>
+          </div>
+          <div class="account-stats">
+            <h1>Welkom <%= username %>!</h1>
+            <p>Dit is je accountpagina.</p>
+            <a href="/logout" class="logout-button">Uitloggen</a>
+          </div>
+        </div>
+      </section>
 
-          <!-- Hidden File Input -->
-          <form
-            id="profile-form"
-            action="/upload-profile-pic"
-            method="POST"
-            enctype="multipart/form-data"
-          >
-            <input
-              type="file"
-              id="profile-input"
-              name="profilePic"
-              accept="image/*"
-              style="display: none"
-            />
-          </form>
-        </div>
-        <div class="account-stats">
-          <h1>Welkom <%= username %>!</h1>
-          <p>Dit is je accountpagina.</p>
-          <a href="/logout" class="logout-button">Uitloggen</a>
-        </div>
-      </div>
-      <div class="saved-movies">
-        <h2>Opgeslagen Films</h2>
-        <% if (savedMovies && savedMovies.length > 0) { %>
-        <ul class="saved-movies-container">
-          <% savedMovies.forEach(movie => { %>
-          <li>
-            <div class="movie-wrapper">
-              <a href="/detail?id=<%= movie.id %>">
-                <img
-                  src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>"
-                  alt="<%= movie.title %>"
-                />
-              </a>
-              <form
-                action="/delete-movie"
-                method="POST"
-                class="floating-delete-form"
-              >
-                <input type="hidden" name="movieId" value="<%= movie.id %>" />
-                <button
-                  class="floating-delete-button"
-                  title="Verwijder film"
-                  data-id="<%= movie.id %>"
+      <section>
+        <div class="saved-movies">
+          <h2>Opgeslagen Films</h2>
+          <% if (savedMovies && savedMovies.length > 0) { %>
+          <ul class="saved-movies-container">
+            <% savedMovies.forEach(movie => { %>
+            <li>
+              <div class="movie-wrapper">
+                <a href="/detail?id=<%= movie.id %>">
+                  <img
+                    src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>"
+                    alt="<%= movie.title %>"
+                  />
+                </a>
+                <form
+                  action="/delete-movie"
+                  method="POST"
+                  class="floating-delete-form"
                 >
-                  ✖
-                </button>
-              </form>
-            </div>
-          </li>
-          <% }) %>
-        </ul>
-        <% } else { %>
-        <p>Je hebt nog geen films opgeslagen.</p>
-        <% } %>
-      </div>
+                  <input type="hidden" name="movieId" value="<%= movie.id %>" />
+                  <button
+                    class="floating-delete-button"
+                    title="Verwijder film"
+                    data-id="<%= movie.id %>"
+                  >
+                    ✖
+                  </button>
+                </form>
+              </div>
+            </li>
+            <% }) %>
+          </ul>
+          <% } else { %>
+          <p>Je hebt nog geen films opgeslagen.</p>
+          <% } %>
+        </div>
+      </section>
     </main>
-
     <footer><%- include('../partials/footer'); %></footer>
   </body>
   <script src="/scripts/search.js"></script>

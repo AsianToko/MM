@@ -14,56 +14,52 @@
     <header><%- include('../partials/header'); %></header>
 
     <main>
-      <h2 class="playing">Trending Movies</h2>
-      <!-- Slider main container -->
-      <div class="swiper">
-        <!-- Additional required wrapper -->
-        <div class="swiper-wrapper">
-          <!-- Slides -->
-          <% if (trendingMovies && trendingMovies.length > 0) { %> <%
-          trendingMovies.forEach(movie => { %>
-          <div class="movie swiper-slide">
-            <a href="/detail?id=<%= movie.id %>">
-              <img
-                src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>"
-                alt="<%= movie.title %>"
-              />
-            </a>
+      <section>
+        <h2 class="playing">Trending Movies</h2>   
+        <div class="swiper">     
+          <div class="swiper-wrapper">
+            <% if (trendingMovies && trendingMovies.length > 0) { %> <%
+            trendingMovies.forEach(movie => { %>
+            <div class="movie swiper-slide">
+              <a href="/detail?id=<%= movie.id %>">
+                <img
+                  src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>"
+                  alt="<%= movie.title %>"
+                />
+              </a>
+            </div>
+            <% }) %> <% } else { %>
+            <p>No movies found.</p>
+            <% } %>
           </div>
-          <% }) %> <% } else { %>
-          <p>No movies found.</p>
-          <% } %>
+          <div class="swiper-pagination"></div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
         </div>
-        <div class="swiper-pagination"></div>
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-button-next"></div>
-      </div>
-
-      <h2 class="playing">Now Playing Movies</h2>
-
-      <!-- Slider main container -->
-      <div class="swiper">
-        <!-- Additional required wrapper -->
-        <div class="swiper-wrapper">
-          <!-- Slides -->
-          <% if (nowPlayingMovies && nowPlayingMovies.length > 0) { %> <%
-          nowPlayingMovies.forEach(movie => { %>
-          <div class="movie swiper-slide">
-            <a href="/detail?id=<%= movie.id %>">
-              <img
-                src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>"
-                alt="<%= movie.title %>"
-              />
-            </a>
+      </section>
+      <section>
+        <h2 class="playing">Now Playing Movies</h2>
+        <div class="swiper">
+          <div class="swiper-wrapper">
+            <% if (nowPlayingMovies && nowPlayingMovies.length > 0) { %> <%
+            nowPlayingMovies.forEach(movie => { %>
+            <div class="movie swiper-slide">
+              <a href="/detail?id=<%= movie.id %>">
+                <img
+                  src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>"
+                  alt="<%= movie.title %>"
+                />
+              </a>
+            </div>
+            <% }) %> <% } else { %>
+            <p>No movies found.</p>
+            <% } %>
           </div>
-          <% }) %> <% } else { %>
-          <p>No movies found.</p>
-          <% } %>
+          <div class="swiper-pagination"></div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
         </div>
-        <div class="swiper-pagination"></div>
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-button-next"></div>
-      </div>
+      </section>
     </main>
 
     <footer><%- include('../partials/footer'); %></footer>

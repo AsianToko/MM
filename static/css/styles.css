@@ -9,7 +9,7 @@
 
 a {
   text-decoration: none;
-  color: #ffcc00;
+  color: #F7B155;
 }
 /* body{
   display: flex;
@@ -24,15 +24,15 @@ a {
   width: 20%;
   margin: auto;
   padding: 1em;
-  border: 0.3em, solid, #ffcc00;
+  border: 0.3em, solid, #F7B155;
   border-radius: 1.5em;
-  background-color: rgba(64, 13, 13, 1);
+  background-color: #400D0D;
 }
 
 .login_button {
   border: none;
   outline: none;
-  background-color: #ffcc00;
+  background-color: #F7B155;
   border-radius: 2em;
   width: 100%;
   height: 2em;
@@ -67,7 +67,7 @@ input {
 /***** HEADER *****/
 
 header {
-  background-color: rgba(64, 13, 13, 1);
+  background-color: #400D0D;
   padding: 15px;
   display: flex;
   align-items: center;
@@ -76,7 +76,7 @@ header {
 
 /* Left-side title */
 .title {
-  font-size: 24px;
+  font-size: 30px;
   font-weight: bold;
 }
 
@@ -105,7 +105,7 @@ nav a {
 }
 
 nav a:hover {
-  color: #ffcc00;
+  color: #F7B155;
 }
 
 /* Zoekbalk styling */
@@ -126,7 +126,7 @@ nav a:hover {
 }
 
 .search-bar button {
-  background: #ffcc00;
+  background: #F7B155;
   border: none;
   padding: 5px 10px;
   cursor: pointer;
@@ -136,7 +136,7 @@ nav a:hover {
 }
 
 .search-bar button:hover {
-  background: #e6b800;
+  background: #F7B155;
 }
 
 #search-results {
@@ -162,11 +162,11 @@ nav a:hover {
   width: 100%;
   height: 100%;
   overflow: auto; /* Zorgt dat je kan scrollen als dit nodig is */
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: #400D0D;
 }
 
 .modal-content {
-  background-color: rgba(64, 13, 13, 1);
+  background-color: #400D0D;
   margin: 10% auto;
   padding: 1.5em;
   width: 80%;
@@ -175,7 +175,7 @@ nav a:hover {
 }
 
 .close {
-  color: #ffcc00;
+  color: #F7B155;
   float: right;
   font-size: 28px;
   font-weight: bold;
@@ -260,7 +260,7 @@ body {
 }
 
 .movie-background-container {
-  background-color: rgb(31, 33, 33);
+  background-color: #141414;
 }
 
 .movie-container {
@@ -290,7 +290,7 @@ body {
 }
 
 .movie-info p {
-  font-size: 1.5em;
+  font-size: 22px;
   line-height: 1.6em;
 }
 
@@ -313,7 +313,7 @@ span {
 }
 
 .save-button {
-  background-color: #ffcc00;
+  background-color: #F7B155;
   color: black;
   border: none;
   padding: 0.5em 1em;
@@ -369,7 +369,7 @@ span {
   height: 25em;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid #ffcc00;
+  border: 3px solid #F7B155;
   display: block;
   margin: 0 auto;
   cursor: pointer;
@@ -404,7 +404,7 @@ span {
 }
 
 .account-container {
-  background-color: rgb(31, 33, 33);
+  background-color: #400D0D;
 }
 
 .account-stats {
@@ -417,7 +417,7 @@ span {
   display: inline-block;
   padding: 1em 2em;
   color: white;
-  background-color: #ffcc00;
+  background-color: #F7B155;
   text-decoration: none;
   border-radius: 5px;
   font-weight: bold;
@@ -435,7 +435,7 @@ span {
 /***************************/
 
 .footer {
-  background-color: rgba(64, 13, 13, 1);
+  background-color: #400D0D;
   color: white;
   text-align: center;
   padding: 20px 0;
@@ -444,7 +444,7 @@ span {
   margin-top: 1em;
 }
 .footer a {
-  color: #ffcc00;
+  color: #F7B155;
   text-decoration: none;
   margin: 0 15px;
   font-size: 16px;
@@ -483,12 +483,13 @@ span {
 }
 
 .playing {
+  font-size: 24px;
   padding-top: 2em;
   padding-left: 1em;
 }
 
 .swiper-pagination {
-  --swiper-pagination-color: #ffcc00;
+  --swiper-pagination-color: #F7B155;
   --swiper-pagination-bullet-inactive-color: #fff;
 }
 
