@@ -35,4 +35,16 @@ async function nowplaying() {
   }
 }
 
+async function series() {
+  try {
+    const response = await fetch('https://api.themoviedb.org/3/tv/popular?language=en-US&page=1', options);
+    const data = await response.json();
+    console.log('Now playing movies:', data);
+    return data;
+  } catch (error) {
+    console.error('Error fetching now playing movies:', error);
+    throw error;
+  }
+}
+
 module.exports = { trending, nowplaying };
