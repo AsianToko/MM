@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>recommendation</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <header><%- include('../partials/header'); %></header>
+    <%= selection.genre %>
+    <form action="/recommendation" method="get" id="form">
+      <h2>Wil je een Film of een Serie?</h2>
+        <div class="type_container">
+    <div class="genre_box type">
+      <input type="checkbox" name="genre[]" class="checkbox" id="genre_film"
+        value="Film"
+        <% if (selection.genre && selection.genre.includes("Film")) { %> checked <% } %>
+      />
+      <label class="box_text" for="genre_film">Film</label>
+    </div>
+
+    <div class="genre_box type">
+      <input type="checkbox" name="genre[]" class="checkbox" id="genre_serie"
+        value="Serie"
+        <% if (selection.genre && selection.genre.includes("Serie")) { %> checked <% } %>
+      />
+      <label class="box_text" for="genre_serie">Serie</label>
+    </div>
+  </div>
+
+    <div class="genre_box type">
+      <input type="checkbox" name="genre[]" class="checkbox" value="Drama"
+        <% if (selection.genre.includes("Drama")) { %> checked <% } %> />
+      <label class="box_text">Drama</label>
+    </div>
+  
+      <!-- <h2>Welke genre wil je kijken?</h2>
+      <div class="genre_container">
+        <div class="genre_box">
+          <input type="checkbox" name="genre1" class="checkbox" />
+          <label class="box_text" for="genre1">Avontuur</label>
+        </div>
+        <div class="genre_box">
+          <input type="checkbox" name="genre1" class="checkbox" />
+          <label class="box_text" for="genre1">Actie</label>
+        </div>
+        <div class="genre_box">
+          <input type="checkbox" name="genre1" class="checkbox" />
+          <label class="box_text" for="genre1">Drama</label>
+        </div>
+        <div class="genre_box">
+          <input type="checkbox" name="genre1" class="checkbox" />
+          <label class="box_text" for="genre1">Komedie</label>
+        </div>
+        <div class="genre_box">
+          <input type="checkbox" name="genre1" class="checkbox" />
+          <label class="box_text" for="genre1">Romantiek</label>
+        </div>
+        <div class="genre_box">
+          <input type="checkbox" name="genre1" class="checkbox" />
+          <label class="box_text" for="genre1">Musical</label>
+        </div>
+        <div class="genre_box">
+          <input type="checkbox" name="genre1" class="checkbox" />
+          <label class="box_text" for="genre1">Documentaire</label>
+        </div>
+        <div class="genre_box">
+          <input type="checkbox" name="genre1" class="checkbox" />
+          <label class="box_text" for="genre1">Westers</label>
+        </div>
+        <div class="genre_box">
+          <input type="checkbox" name="genre1" class="checkbox" />
+          <label class="box_text" for="genre1">Reality</label>
+        </div>
+        <div class="genre_box">
+          <input type="checkbox" name="genre1" class="checkbox" />
+          <label class="box_text" for="genre1">Educatief</label>
+        </div>
+      </div> -->
+      <!-- <h2>Wat voor rating?</h2>
+      <div class="rating_container">
+        <div class="genre_box">
+          <input
+            type="range"
+            min="1"
+            max="10"
+            value="7"
+            name="rating"
+            class="slider"
+          />
+        </div>
+      </div> -->
+    </form>
+    <h2>Aanbevelingen</h2>
+
+      <% if (allMovies.length > 0) { %>
+        <div class="movie-grid">
+          <% allMovies.forEach(movie => { %>
+            <div class="movie">
+              <img src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>" alt="<%= movie.title %>">
+              <h3><%= movie.title %></h3>
+              <p>Rating: <%= movie.vote_average %>/10</p>
+            </div>
+          <% }); %>
+        </div>
+      <% } else { %>
+        <p>Selecteer "Film" of "Serie" om films te bekijken.</p>
+      <% } %>
+
+    <footer><%- include('../partials/footer'); %></footer>
+  </body>
+  <script src="/scripts/recommendation.js"></script>
+</html>
