@@ -577,3 +577,10 @@ label {
 .type {
   margin-left: 1.5em;
 }
+
+.movie-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 0.8em;
+  margin-bottom: 1em;
+}

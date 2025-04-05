@@ -5,7 +5,7 @@ const { MongoClient } = require("mongodb");
 require("dotenv").config();
 const bcrypt = require("bcrypt");
 const xss = require("xss");
-const { trending, nowplaying } = require("./api"); 
+const { trending, nowplaying, series } = require("./api");
 const saltRounds = 10;
 const session = require("express-session"); // Importeer express-session
 
@@ -93,15 +93,15 @@ app.get("/recommendation", async (req, res) => {
     let allMovies = [];
 
     if (genresSelected.length > 0) { 
-      const trendingMovies = await trending();
-      const nowPlayingMovies = await nowplaying();
-      allMovies = [...trendingMovies.results, ...nowPlayingMovies.results];
+        const nowPlayingMovies = await nowplaying();
+      const seriesData = await series();
+      allMovies = [...nowPlayingMovies.results, ...seriesData.results];
 
       if (genresSelected.includes("Film")) {
-        allMovies = allMovies.filter(movie => movie.media_type !== "tv");
+        allMovies = nowPlayingMovies.results;
       }
       if (genresSelected.includes("Serie")) {
-        allMovies = allMovies.filter(movie => movie.media_type !== "movie");
+        allMovies = seriesData.results;
       }
       if (genresSelected.includes("Drama")) {
         allMovies = allMovies.filter(movie => movie.genre_ids && movie.genre_ids.includes(18));
