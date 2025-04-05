@@ -152,6 +152,7 @@ nav a:hover {
   margin-right: 10px;
 }
 
+/* bron: ChatGPT */
 .modal {
   display: none; /* Wordt standaard verstopt */
   position: fixed;
@@ -187,7 +188,7 @@ nav a:hover {
   cursor: pointer;
 }
 
-/* bron: ChatGPT */
+
 /* Styling for search results inside the modal */
 #search-results {
   display: flex;

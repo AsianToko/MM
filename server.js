@@ -12,7 +12,8 @@ const session = require("express-session"); // Importeer express-session
 const multer = require("multer");
 const fs = require("fs");
 
-// Set up storage for profile pictures
+// opslaan van profielfoto's
+// bron: ChatGPT
 const storage = multer.diskStorage({
   destination: "./static/uploads/",
   filename: (req, file, cb) => {
@@ -123,7 +124,7 @@ app.post("/register", async (req, res) => {
   }
 });
 
-// Update the /upload-profile-pic route
+// Update de /upload-profile-pic route
 app.post(
   "/upload-profile-pic",
   upload.single("profilePic"),
@@ -138,19 +139,17 @@ app.post(
       const database = client.db("login");
       const usersCollection = database.collection("login");
 
-      // Read the uploaded file and encode it as Base64
       const profilePicPath = req.file.path;
       const profilePicData = fs.readFileSync(profilePicPath, {
         encoding: "base64",
       });
 
-      // Update the user's profile picture in the database
+      // Update de gebruiker zijn profielfoto in de database
       await usersCollection.updateOne(
         { username: req.session.username },
         { $set: { profilePicture: profilePicData } }
       );
 
-      // Delete the uploaded file from the local filesystem
       fs.unlinkSync(profilePicPath);
 
       res.redirect("/account");
