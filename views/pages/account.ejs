@@ -10,80 +10,80 @@
     <header><%- include('../partials/header'); %></header>
 
     <main>
-      <section>
-        <div class="account-container">
-          <div class="profile-section">
-            <label for="profile-input">
+      <!-- Hier hebben we hulp gehad van ChatGPT, vooral troubleshooten -->
+      <section class="account-container">
+        <div class="profile-section">
+          <form
+            id="profile-form"
+            action="/upload-profile-pic"
+            method="POST"
+            enctype="multipart/form-data"
+          >
+            <label for="profile-input" style="cursor: pointer">
               <img
                 id="profile-pic"
                 src="<%= profilePicture %>"
-                alt="Profile Picture"
+                alt="Profielfoto"
+                width="150"
+                height="150"
+                style="border-radius: 50%; object-fit: cover"
               />
             </label>
-            <form
-              id="profile-form"
-              action="/upload-profile-pic"
-              method="POST"
-              enctype="multipart/form-data"
-            >
-              <input
-                type="file"
-                id="profile-input"
-                name="profilePic"
-                accept="image/*"
-                style="display: none"
-              />
-            </form>
-          </div>
-          <div class="account-stats">
-            <h1>Welkom <%= username %>!</h1>
-            <p>Dit is je accountpagina.</p>
-            <a href="/logout" class="logout-button">Uitloggen</a>
-          </div>
+            <input
+              type="file"
+              id="profile-input"
+              name="profilePic"
+              accept="image/*"
+            />
+          </form>
+        </div>
+        <div class="account-stats">
+          <h1>Welkom <%= username %>!</h1>
+          <p>Dit is je accountpagina.</p>
+          <a href="/logout" class="logout-button">Uitloggen</a>
         </div>
       </section>
-
-      <section>
-        <div class="saved-movies">
-          <h2>Opgeslagen Films</h2>
-          <% if (savedMovies && savedMovies.length > 0) { %>
-          <ul class="saved-movies-container">
-            <% savedMovies.forEach(movie => { %>
-            <li>
-              <div class="movie-wrapper">
-                <a href="/detail?id=<%= movie.id %>">
-                  <img
-                    src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>"
-                    alt="<%= movie.title %>"
-                  />
-                </a>
-                <form
-                  action="/delete-movie"
-                  method="POST"
-                  class="floating-delete-form"
+      <section class="saved-movies">
+        <h2>Opgeslagen Films</h2>
+        <% if (savedMovies && savedMovies.length > 0) { %>
+        <ul class="saved-movies-container">
+          <% savedMovies.forEach(movie => { %>
+          <li>
+            <div class="movie-wrapper">
+              <a href="/detail?id=<%= movie.id %>">
+                <img
+                  src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>"
+                  alt="<%= movie.title %>"
+                />
+              </a>
+              <form
+                action="/delete-movie"
+                method="POST"
+                class="floating-delete-form"
+              >
+                <input type="hidden" name="movieId" value="<%= movie.id %>" />
+                <button
+                  class="floating-delete-button"
+                  title="Verwijder film"
+                  data-id="<%= movie.id %>"
                 >
-                  <input type="hidden" name="movieId" value="<%= movie.id %>" />
-                  <button
-                    class="floating-delete-button"
-                    title="Verwijder film"
-                    data-id="<%= movie.id %>"
-                  >
-                    ✖
-                  </button>
-                </form>
-              </div>
-            </li>
-            <% }) %>
-          </ul>
-          <% } else { %>
-          <p>Je hebt nog geen films opgeslagen.</p>
-          <% } %>
-        </div>
+                  ✖
+                </button>
+              </form>
+            </div>
+          </li>
+          <% }) %>
+        </ul>
+        <% } else { %>
+        <p>Je hebt nog geen films opgeslagen.</p>
+        <% } %>
       </section>
     </main>
+
     <footer><%- include('../partials/footer'); %></footer>
+
+    <script src="/scripts/search.js"></script>
+    <script src="/scripts/profile.js"></script>
+    <script src="/scripts/delete.js"></script>
   </body>
-  <script src="/scripts/search.js"></script>
-  <script src="/scripts/profile.js"></script>
-  <script src="/scripts/delete.js"></script>
 </html>
