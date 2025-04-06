@@ -171,7 +171,7 @@ app.post("/register", async (req, res) => {
       await usersCollection.insertOne({
         username,
         password: hashedPassword,
-        profilePicture: "/default-avatar.png", // Default profile picture
+        profilePicture: "/static/images/base.png", // Default profile picture
       });
       // Direct inloggen en doorgaan naar account
       req.session.username = username; // Store username in session
@@ -198,10 +198,9 @@ app.post(
       const database = client.db("login");
       const usersCollection = database.collection("login");
 
+      // Lees het bestand van de afbeelding en converteer naar base64
       const profilePicPath = req.file.path;
-      const profilePicData = fs.readFileSync(profilePicPath, {
-        encoding: "base64",
-      });
+      const profilePicData = fs.readFileSync(profilePicPath, { encoding: "base64" });
 
       // Update de gebruiker zijn profielfoto in de database
       await usersCollection.updateOne(
@@ -209,8 +208,10 @@ app.post(
         { $set: { profilePicture: profilePicData } }
       );
 
+      // Verwijder het bestand na opslag in de DB
       fs.unlinkSync(profilePicPath);
 
+      // Redirect naar accountpagina
       res.redirect("/account");
     } catch (err) {
       console.error("Error updating profile picture:", err);
@@ -341,7 +342,7 @@ app.get("/account", async (req, res) => {
       username: req.session.username,
       profilePicture: user.profilePicture
         ? `data:image/png;base64,${user.profilePicture}` // Render Base64 image
-        : "/default-avatar.png",
+        : "/default-avatar.png",  // Fallback image if no profile picture
       savedMovies: user.savedMovies || [],
     });
   } catch (err) {

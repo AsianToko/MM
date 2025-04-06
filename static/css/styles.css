@@ -21,10 +21,11 @@ a {
 /****** LOGIN ******/
 
 .login {
-  width: 20%;
+  width: 90%;
+  max-width: 400px;
   margin: auto;
   padding: 1em;
-  border: 0.3em, solid, #F7B155;
+  border: 0.3em solid #F7B155;
   border-radius: 1.5em;
   background-color: #400D0D;
 }
@@ -363,13 +364,15 @@ span {
 /***************************/
 /***************************/
 
+
 /* Profiel foto */
 #profile-pic {
+  padding: 0;
   width: 25em;
   height: 25em;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid #F7B155;
+  border: 3px solid #ffcc00;
   display: block;
   margin: 0 auto;
   cursor: pointer;
@@ -403,14 +406,16 @@ span {
   border-radius: 5px;
 }
 
-.account-container {
-  background-color: #400D0D;
+.profile-section {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .account-stats {
   display: flex;
   justify-content: space-around;
   padding: 2em;
+  background-color: #141414;
 }
 
 .logout-button {
@@ -563,6 +568,11 @@ label {
   font-weight: bold;
 }
 
+input[type="checkbox"]:focus {
+  outline: 2px dashed #e6b800;
+  outline-offset: 2px;
+}
+
 .genre_container {
   display: flex;
   justify-content: space-evenly;
@@ -584,3 +594,4 @@ label {
   gap: 0.8em;
   margin-bottom: 1em;
 }
+
