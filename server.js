@@ -106,6 +106,34 @@ app.get("/recommendation", async (req, res) => {
       if (genresSelected.includes("Drama")) {
         allMovies = allMovies.filter(movie => movie.genre_ids && movie.genre_ids.includes(18));
       }
+      if (genresSelected.includes("Adventure")) {
+        allMovies = allMovies.filter(movie => movie.genre_ids && movie.genre_ids.includes(12));
+      }
+      if (genresSelected.includes("Action")) {
+        allMovies = allMovies.filter(movie => movie.genre_ids && movie.genre_ids.includes(28));
+      }
+      if (genresSelected.includes("Comedy")) {
+        allMovies = allMovies.filter(movie => movie.genre_ids && movie.genre_ids.includes(35));
+      }
+      if (genresSelected.includes("Romance")) {
+        allMovies = allMovies.filter(movie => movie.genre_ids && movie.genre_ids.includes(10749));
+      }
+      if (genresSelected.includes("Music")) {
+        allMovies = allMovies.filter(movie => movie.genre_ids && movie.genre_ids.includes(10402));
+      }
+      if (genresSelected.includes("Documentary")) {
+        allMovies = allMovies.filter(movie => movie.genre_ids && movie.genre_ids.includes(99));
+      }
+      if (genresSelected.includes("Western")) {
+        allMovies = allMovies.filter(movie => movie.genre_ids && movie.genre_ids.includes(37));
+      }
+      if (genresSelected.includes("Horror")) {
+        allMovies = allMovies.filter(movie => movie.genre_ids && movie.genre_ids.includes(27));
+      }
+      if (genresSelected.includes("Thriller")) {
+        allMovies = allMovies.filter(movie => movie.genre_ids && movie.genre_ids.includes(53));
+      }
+
     }
 
     res.render("pages/recommendation", {

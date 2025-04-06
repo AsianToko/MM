@@ -11,7 +11,7 @@
     <%= selection.genre %>
     <form action="/recommendation" method="get" id="form">
       <h2>Wil je een Film of een Serie?</h2>
-        <div class="type_container">
+  <div class="type_container">
     <div class="genre_box type">
       <input type="checkbox" name="genre[]" class="checkbox" id="genre_film"
         value="Film"
@@ -29,68 +29,60 @@
     </div>
   </div>
 
-    <div class="genre_box type">
+<div class="type_container">
+  <div class="genre_box type">
       <input type="checkbox" name="genre[]" class="checkbox" value="Drama"
         <% if (selection.genre.includes("Drama")) { %> checked <% } %> />
       <label class="box_text">Drama</label>
     </div>
-  
-      <!-- <h2>Welke genre wil je kijken?</h2>
-      <div class="genre_container">
-        <div class="genre_box">
-          <input type="checkbox" name="genre1" class="checkbox" />
-          <label class="box_text" for="genre1">Avontuur</label>
-        </div>
-        <div class="genre_box">
-          <input type="checkbox" name="genre1" class="checkbox" />
-          <label class="box_text" for="genre1">Actie</label>
-        </div>
-        <div class="genre_box">
-          <input type="checkbox" name="genre1" class="checkbox" />
-          <label class="box_text" for="genre1">Drama</label>
-        </div>
-        <div class="genre_box">
-          <input type="checkbox" name="genre1" class="checkbox" />
-          <label class="box_text" for="genre1">Komedie</label>
-        </div>
-        <div class="genre_box">
-          <input type="checkbox" name="genre1" class="checkbox" />
-          <label class="box_text" for="genre1">Romantiek</label>
-        </div>
-        <div class="genre_box">
-          <input type="checkbox" name="genre1" class="checkbox" />
-          <label class="box_text" for="genre1">Musical</label>
-        </div>
-        <div class="genre_box">
-          <input type="checkbox" name="genre1" class="checkbox" />
-          <label class="box_text" for="genre1">Documentaire</label>
-        </div>
-        <div class="genre_box">
-          <input type="checkbox" name="genre1" class="checkbox" />
-          <label class="box_text" for="genre1">Westers</label>
-        </div>
-        <div class="genre_box">
-          <input type="checkbox" name="genre1" class="checkbox" />
-          <label class="box_text" for="genre1">Reality</label>
-        </div>
-        <div class="genre_box">
-          <input type="checkbox" name="genre1" class="checkbox" />
-          <label class="box_text" for="genre1">Educatief</label>
-        </div>
-      </div> -->
-      <!-- <h2>Wat voor rating?</h2>
-      <div class="rating_container">
-        <div class="genre_box">
-          <input
-            type="range"
-            min="1"
-            max="10"
-            value="7"
-            name="rating"
-            class="slider"
-          />
-        </div>
-      </div> -->
+  <div class="genre_box type">
+      <input type="checkbox" name="genre[]" class="checkbox" value="Adventure"
+        <% if (selection.genre.includes("Adventure")) { %> checked <% } %> />
+      <label class="box_text">Avontuur</label>
+    </div>
+  <div class="genre_box type">
+      <input type="checkbox" name="genre[]" class="checkbox" value="Action"
+        <% if (selection.genre.includes("Action")) { %> checked <% } %> />
+      <label class="box_text">Actie</label>
+    </div>
+  <div class="genre_box type">
+      <input type="checkbox" name="genre[]" class="checkbox" value="Comedy"
+        <% if (selection.genre.includes("Comedy")) { %> checked <% } %> />
+      <label class="box_text">komedie</label>
+    </div>
+  <div class="genre_box type">
+      <input type="checkbox" name="genre[]" class="checkbox" value="Romance"
+        <% if (selection.genre.includes("Romance")) { %> checked <% } %> />
+      <label class="box_text">Romantiek</label>
+    </div>
+  <div class="genre_box type">
+      <input type="checkbox" name="genre[]" class="checkbox" value="Music"
+        <% if (selection.genre.includes("Music")) { %> checked <% } %> />
+      <label class="box_text">Muziek</label>
+    </div>
+  <div class="genre_box type">
+      <input type="checkbox" name="genre[]" class="checkbox" value="Documentary"
+        <% if (selection.genre.includes("Documentary")) { %> checked <% } %> />
+      <label class="box_text">Documentaire</label>
+    </div>
+  <div class="genre_box type">
+      <input type="checkbox" name="genre[]" class="checkbox" value="Western"
+        <% if (selection.genre.includes("Western")) { %> checked <% } %> />
+      <label class="box_text">Westers</label>
+    </div>
+  <div class="genre_box type">
+      <input type="checkbox" name="genre[]" class="checkbox" value="Horror"
+        <% if (selection.genre.includes("Horror")) { %> checked <% } %> />
+      <label class="box_text">Horror</label>
+    </div>
+  <div class="genre_box type">
+      <input type="checkbox" name="genre[]" class="checkbox" value="Thriller"
+        <% if (selection.genre.includes("Thriller")) { %> checked <% } %> />
+      <label class="box_text">Thriller</label>
+    </div>
+
+</div>
+
     </form>
     <h2>Aanbevelingen</h2>
 
@@ -98,9 +90,9 @@
         <div class="movie-grid">
           <% allMovies.forEach(movie => { %>
             <div class="movie">
+              <a href="/detail?id=<%= movie.id %>">
               <img src="https://image.tmdb.org/t/p/w500<%= movie.poster_path %>" alt="<%= movie.title %>">
-              <h3><%= movie.title %></h3>
-              <p>Rating: <%= movie.vote_average %>/10</p>
+              </a>
             </div>
           <% }); %>
         </div>
