@@ -543,17 +543,22 @@ input[type="checkbox"] {
   position: relative;
   height: 100%;
   width: 100%;
-  background-color: #ffffff;
+  background-color: #262525;
   border-radius: 10px;
   cursor: pointer;
-  border: 3px solid transparent;
+  border: 1px solid #626161;
   outline: none;
 }
 
-input[type="checkbox"]:checked {
+input[type="checkbox"]:checked{
   border: 0.2em solid #e6b800;
   transition: 0.2s;
 }
+
+input[type="checkbox"]:checked + label {
+  color: #e6b800;
+}
+
 label {
   display: flex;
   flex-direction: column;
@@ -564,8 +569,9 @@ label {
   position: absolute;
   bottom: 0;
   pointer-events: none;
-  color: #e6b800;
+  color: #ffffff;
   font-weight: bold;
+  transition: color 0.3s ease;
 }
 
 input[type="checkbox"]:focus {
