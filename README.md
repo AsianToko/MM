@@ -52,6 +52,6 @@ Movie Matching website
 
 Zorg ervoor dat je een geldige API-sleutel hebt van TMDB, anders werkt de applicatie niet correct.
 
-**In de toekomst
+## In de toekomst
 voor de toekomst willen we nog een funtie toevoegen om vrienden te worden met andere mensen zodat je kan zien waar iemands intresses liggen in films en zodat je mischien samen naar de film kan gaan
 
