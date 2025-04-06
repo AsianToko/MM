@@ -93,7 +93,7 @@ app.get("/recommendation", async (req, res) => {
     let allMovies = [];
 
     if (genresSelected.length > 0) { 
-        const nowPlayingMovies = await nowplaying();
+      const nowPlayingMovies = await nowplaying();
       const seriesData = await series();
       allMovies = [...nowPlayingMovies.results, ...seriesData.results];
 
@@ -133,13 +133,13 @@ app.get("/recommendation", async (req, res) => {
       if (genresSelected.includes("Thriller")) {
         allMovies = allMovies.filter(movie => movie.genre_ids && movie.genre_ids.includes(53));
       }
-
     }
 
     res.render("pages/recommendation", {
-      selection: { genre: genresSelected },
-      allMovies
+      selection: { genre: genresSelected},
+      allMovies: allMovies,
     });
+
   } catch (error) {
     console.error("Fout bij het ophalen van films:", error);
     res.status(500).send("Er is een fout opgetreden bij het laden van films.");

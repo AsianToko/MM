@@ -8,7 +8,6 @@
   </head>
   <body>
     <header><%- include('../partials/header'); %></header>
-    <%= selection.genre %>
     <form action="/recommendation" method="get" id="form">
       <h2>Wil je een Film of een Serie?</h2>
   <div class="type_container">
@@ -29,7 +28,8 @@
     </div>
   </div>
 
-<div class="type_container">
+<h2 id="genre_title">Wat voor genres wil je zien?</h2>
+<div class="type_container" id="genre_options">
   <div class="genre_box type">
       <input type="checkbox" name="genre[]" class="checkbox" value="Drama"
         <% if (selection.genre.includes("Drama")) { %> checked <% } %> />
@@ -80,10 +80,9 @@
         <% if (selection.genre.includes("Thriller")) { %> checked <% } %> />
       <label class="box_text">Thriller</label>
     </div>
-
 </div>
-
     </form>
+
     <h2>Aanbevelingen</h2>
 
       <% if (allMovies.length > 0) { %>
